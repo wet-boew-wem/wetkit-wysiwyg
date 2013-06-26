@@ -3,7 +3,7 @@ WetKit WYSIWYG
 Integrates a WYSIWYG into the WxT-Drupal distribution
 
 Key Features
-* Gives you the choice of using TinyMCE 3.5.8 (Stable + tested) or CKEditor 4.1 (stable)
+* Gives you the choice of using TinyMCE 3.5.8 (Stable + tested) or CKEditor 4.1.2 (stable)
 * One of the most refined TinyMCE WYSIWYG integrations in Drupal
 * A good MarkitUp Editor for Source Code
 * Switching WYSIWYG + INLINE WYSIWYG + HTML text formats
