@@ -8,7 +8,7 @@ core = 7.x
 projects[wysiwyg][version] = 2.x-dev
 projects[wysiwyg][subdir] = contrib
 projects[wysiwyg][download][type] = git
-projects[wysiwyg][download][revision] = d9c3f65
+projects[wysiwyg][download][revision] = 31840cb
 projects[wysiwyg][download][branch] = 7.x-2.x
 projects[wysiwyg][patch][1489096] = http://drupal.org/files/wysiwyg-table-format-1489096-7.patch
 projects[wysiwyg][patch][1786732] = http://drupal.org/files/wysiwyg-arbitrary_image_paths_markitup-1786732-3.patch
@@ -31,7 +31,7 @@ projects[linkit][version] = 1.x-dev
 projects[linkit][type] = module
 projects[linkit][subdir] = contrib
 projects[linkit][download][type] = git
-projects[linkit][download][revision] = 11c50b8
+projects[linkit][download][revision] = 4356658
 projects[linkit][download][branch] = 7.x-2.x
 projects[linkit][patch][1793896] = http://drupal.org/files/entitylanguages-1793896-1.patch
 
@@ -47,14 +47,14 @@ projects[caption_filter][version] = 1.x-dev
 projects[caption_filter][type] = module
 projects[caption_filter][subdir] = contrib
 projects[caption_filter][download][type] = git
-projects[caption_filter][download][revision] = c9794cf
+projects[caption_filter][download][revision] = 6ab247f
 projects[caption_filter][download][branch] = 7.x-1.x
 projects[caption_filter][patch][1432092] = http://drupal.org/files/1432092-button-and-image.patch
 
 ; Include our Editors
 
 libraries[ckeditor][download][type] = git
-libraries[ckeditor][download][revision] = a9514c2
+libraries[ckeditor][download][revision] = 336df63
 libraries[ckeditor][download][url] = https://github.com/ckeditor/ckeditor-releases.git
 
 libraries[markitup][download][type] = git
