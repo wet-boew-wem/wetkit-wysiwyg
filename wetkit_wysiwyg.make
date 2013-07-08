@@ -57,6 +57,6 @@ libraries[ckeditor][download][type] = git
 libraries[ckeditor][download][revision] = 336df63
 libraries[ckeditor][download][url] = https://github.com/ckeditor/ckeditor-releases.git
 
-libraries[markitup][download][type] = git
-libraries[markitup][download][revision] = 4b77626
-libraries[markitup][download][url] = https://github.com/sylus/markitup-wetkit.git
+libraries[markitup][download][type] = get
+libraries[markitup][download][url] = https://github.com/markitup/1.x/tarball/master
+libraries[markitup][patch][1715642] = http://drupal.org/files/1715642-adding-html-set-markitup-editor.patch
