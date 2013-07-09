@@ -41,6 +41,31 @@
 				c = cm.createSplitButton(n, {title : ed.getLang('wetkitcleanup.title'), onclick : t._aboutPlugin, image : t.url + "/img/wetkitcleanup.png"});
 
 				c.onRenderMenu.add(function(c, m) {
+					var this_lang = 'en', opp_lang = 'fr', en_id = null, fr_id = null, is_multilingual = false;
+					var langMatch = ed.id.match(/-(en|fr)-/);
+					//var langMatch = ed.id.match(/_(en|fr)/);
+					if (langMatch && langMatch.length > 1) {
+						this_lang = langMatch[1];
+						if (this_lang == 'fr') {
+							opp_lang = 'en';
+							fr_id = ed.id;
+						} else {
+							en_id = ed.id;
+						}
+						var testId = ed.id.replace('-'+this_lang+'-','-'+opp_lang+'-');
+
+						//var testId = ed.id.replace('_'+this_lang,'_'+opp_lang);
+						if (tinyMCE.get(testId)) {
+							if (this_lang == 'fr') {
+								en_id = testId;
+							} else {
+								fr_id = testId;
+							}
+							is_multilingual = true;
+						}
+					}
+
+
 					//m.add({title : 'Cleanup/Transformation Operations', 'class' : 'mceMenuItemTitle'}).setDisabled(1);
 					var sub = m.addMenu({title : ed.getLang('wetkitcleanup.convert_titles'), onclick : function () {return false;}, onmouseover : function () {alert(1);}}); 
 					sub.add({title : ed.getLang('wetkitcleanup.demote_titles'), onclick : function () {t._dropHeadingLevels()}}).setDisabled(0);
@@ -73,6 +98,16 @@
 					sub.add({title : ed.getLang('wetkitcleanup.set_language_en'), onclick : function () {t._setLanguage('en')}}).setDisabled(0);
 					sub.add({title : ed.getLang('wetkitcleanup.set_language_fr'), onclick : function () {t._setLanguage('fr')}}).setDisabled(0);
 
+					sub = m.addMenu({title : ed.getLang('wetkitcleanup.extract_column'), onclick : function () {return false;}}); 
+					if (is_multilingual) {
+						sub.add({title : ed.getLang('wetkitcleanup.split_content_ef'), onclick : function () {t._splitColumnContent(Array(en_id,fr_id),Array(1,2))}}).setDisabled(0);
+						sub.add({title : ed.getLang('wetkitcleanup.split_content_fe'), onclick : function () {t._splitColumnContent(Array(en_id,fr_id),Array(2,1))}}).setDisabled(0);
+					}
+					sub.add({title : ed.getLang('wetkitcleanup.extract_column_1'), onclick : function () {t._extractTableColumn(1)}}).setDisabled(0);
+					sub.add({title : ed.getLang('wetkitcleanup.extract_column_2'), onclick : function () {t._extractTableColumn(2)}}).setDisabled(0);
+
+					//m.add({title : 'Quick Fix All', onclick : function () {t._QuickFixAll()}}).setDisabled(0);
+                                        m.add({title : ed.getLang('wetkitcleanup.quick_fix_all'), onclick : function () {t._QuickFixAll()}}).setDisabled(0);
 					sub = m.addMenu({title : ed.getLang('wetkitcleanup.other_cleanup'), onclick : function () {return false;}}); 
 					sub.add({title : ed.getLang('wetkitcleanup.remove_empty_blocks'), onclick : function () {t._removeEmptyBlocks()}}).setDisabled(0);
 					sub.add({title : ed.getLang('wetkitcleanup.remove_table_dimensions'), onclick : function () {t._tableStripWidthHeight(false)}}).setDisabled(0);
@@ -101,6 +136,59 @@
 		},
 
 		// Private methods
+
+		_QuickFixAll : function() {
+			var t = this, ed = t.editor, nl, i, d = ed.getDoc(), b = ed.getBody();
+			t._removeEmptyBlocks();
+			t._numberGroups();
+			t._tableDataParas();
+			t._tableDataAlign('right');
+			t._tableConvertAlignToStyles();
+			var newData = b.innerHTML;
+			newData = newData.replace(/<o:p>(&nbsp;|\s)*<\/o:p>/g, ""); // Remove all instances of <o:p>
+			newData = newData.replace(/<\/?o\:[^>]*>/g, "");
+			newData = newData.replace(/<st1:[^>]*>/g, ""); // remove all SmartTags (from MS Word)
+			newData = newData.replace(/<\?xml:[^>]*>/g, ""); // remove all XML(from MS Word)
+			newData = newData.replace(/<\/?(?:st1|font|V:|o:p)[^>]*>/ig, "");
+			newData = newData.replace(/<!\[if !mso\]>.*?<!\[endif\]>/ig, "");
+			newData = newData.replace(/<!\[if !supportEmptyParas\]>.*?<!\[endif\]>/ig, "");
+			newData = newData.replace(/<!--\[if supportFields\]>.*?<!\[endif\]-->/ig, "");
+			newData = newData.replace(/<!\[if !supportLists\]>.*?<!\[endif\]>/ig, "<li>");
+			newData = newData.replace(/<!\[if !supportMisalignedRows+\]>.*?<!\[endif\]>/ig, "");
+			newData = newData.replace(/<v:shapetype .*?<\/v:shapetype>/ig, "");
+			newData = newData.replace(/<v:shape .*?<\/v:shape>/ig, "");
+			newData = newData.replace(/ v:shapes="[^"]+"/ig, "");
+			// apply any unaccepted tracked changes in documents
+			newData = newData.replace(/<del [^>]+>.*?<\/del>/ig, "");
+			newData = newData.replace(/<ins [^>]+>(.*?)<\/ins>/ig, "$1");
+
+			newData = newData.replace(/<!--\[if[^>]+-->/ig, "");
+			newData = newData.replace(/<!\[endif\]-->/ig, "");
+			newData = newData.replace(/\s+class="mso[^"]+"/ig, "");
+			newData = newData.replace(/margin:\s+[^;]+(\s+[^;]+)\s+[^;]+(\s+[^;]+);/ig, "margin: auto $1 auto $2;");
+			newData = newData.replace(/%1e/g, "-");
+			newData = newData.replace(/(<li(?:>|\s[^>]*>))(?:&nbsp;|\s)*(?:&middot;|o|&sect;|&bull;)(?:&nbsp;|\s)+/ig, "$1");
+			newData = newData.replace(/<(p|h[1-6])(?:>|\s[^>]*>)(?:&nbsp;|\s|<br \/>|<\/?(?:em|strong|span|b|i)(?:>|\s[^>]*>))*<\/\1>/ig, "");
+			newData = newData.replace(/(<td[^>]*>)\s*(<\/td>)/ig, "$1&nbsp;$2");
+			newData = newData.replace(/(<(?:em|strong|b|i)>)\s*(<(?:p|h[1-6])[^>]*>)/ig, "$2$1");
+			newData = newData.replace(/(<\/(?:p|h[1-6])>)\s*(<\/(?:em|strong|b|i)>)/ig, "$2$1");
+			newData = newData.replace(/(<(?:p|h[1-6])[^>]*)\s+align="left"/ig, "$1");
+			newData = newData.replace(/(<(?:p|h[1-6])[^>]*)\s+align="(right|center|justify)"/ig, "$1 style=\"text-align: $2\"");
+			newData = newData.replace(/(<(?:p|h[1-6])(?:>|\s[^>]*>))(&nbsp;|\s|<br[^>]*>)+/ig, "$1");
+			newData = newData.replace(/(?:<(p|h[1-6])(?:>|\s[^>]*>))(&nbsp;|\s|<br[^>]*>)*<\/\1>/ig, "");
+			newData = newData.replace(/(?:<(p|h[1-6])(?:>|\s[^>]*>))<span[^>]*>(&nbsp;|\s|<br[^>]*>)*<\/span><\/\1>/ig, "");
+			newData = newData.replace(/&nbsp;(&nbsp;)+\s/ig, " ");
+			newData = newData.replace(/<(?:b|strong)>\s*(<p(?:>|\s[^>]*>))(.*?)(<\/p>)\s*<\/(?:b|strong)>/ig, "$1<strong>$2</strong></p>");
+			newData = newData.replace(/<(strong|em)>(\s*)<\/\1>/ig, "$2");
+			// fix MS Word footnote / endnote references that lose the name and id attributes on paste
+			newData = newData.replace(/(<a[^>]*href=")file:[^"#]+/ig, "$1");
+			newData = newData.replace(/(<a[^>]*)\sid="_(ftn|edn)ref(\d+)"/ig, "$1");
+			newData = newData.replace(/(<a[^>]*)\sname="_(ftn|edn)ref(\d+)"/ig, "$1");
+			newData = newData.replace(/(<a[^>]*\shref="[^"]*#_(ftn|edn)ref(\d+)")([^>]*)/ig, "$1 name=\"_$2$3\" id=\"_$2$3\"$4");
+			newData = newData.replace(/(<a[^>]*\shref="[^"]*#_(ftn|edn)(\d+)")([^>]*)/ig, "$1 name=\"_$2ref$3\" id=\"_$2ref$3\"$4");
+			newData = newData.replace(/(<\/a>)(\[(\d+)\])/ig, "$2$1");
+			b.innerHTML = newData;
+		},
 
 		_removeEmptyBlocks : function() {
 			var t = this, ed = t.editor, nl, i, d = ed.getDoc(), b = ed.getBody();
@@ -239,6 +327,94 @@
 			return grid;
 		},
 
+		_extractTableColumn : function(colNumber) {
+			var t = this, ed = t.editor, nl, i, d = ed.getDoc(), b = ed.getBody();
+			if (colNumber == 2) {
+				var colHasContent = t._checkColumnContent(t.editor);
+				if (colHasContent.length == 3 && colHasContent[1] == false) {
+					colNumber = 3;
+				}
+			}
+			colNumber = colNumber - 1; // convert to zero-based for arrays
+			var emptyCellMatch = new RegExp("^(?:<[^>]*>|&nbsp;|\\s)*$");
+			var tables = ed.dom.select('body > table, body > div > table');
+			for (var tbl=0; tbl<tables.length; tbl++) {
+				var contentBuffer = '';
+				var rows = ed.dom.select('tbody > tr, thead > tr',tables[tbl]);
+				for (var trw=0; trw<rows.length; trw++) {
+					var tcells = ed.dom.select('th, td',rows[trw]);
+					if (tcells.length < colNumber+1) {
+						alert(ed.getLang('wetkitcleanup.not_exists_chosen_column'));
+						return;
+					}
+					if (ed.dom.select('p, div, ul, ol',tcells[colNumber]).length > 0) {
+						contentBuffer += tcells[colNumber].innerHTML;
+					} else {
+						contentBuffer += '<p>' + tcells[colNumber].innerHTML + '</p>';
+					}
+				}
+				ed.dom.setOuterHTML(tables[tbl],contentBuffer);
+			}
+		},
+		
+		_checkColumnContent : function(ed) {
+			var emptyCellMatch = new RegExp("^(?:<[^>]*>|&nbsp;|\\s)*$");
+			var colHasContent = Array();
+			var tables = ed.dom.select('body > table, body > div > table');
+			for (var tbl=0; tbl<tables.length; tbl++) {
+				var rows = ed.dom.select('tbody > tr, thead > tr',tables[tbl]);
+				for (var trw=0; trw<rows.length; trw++) {
+					var tcells = ed.dom.select('th, td',rows[trw]);
+					for (var tc = 0; tc < tcells.length; tc++) {
+						if (!emptyCellMatch.test(tcells[tc].innerHTML)) {
+							colHasContent[tc] = true;
+						} else {
+							colHasContent[tc] = colHasContent[tc] ? colHasContent[tc] : false;
+						}
+					}
+				}
+			}
+			return colHasContent;
+		},
+
+		_splitColumnContent : function(editorIds,colIndexes) {
+			var t = this;
+			var oppEdIndex = t.editor.id.indexOf('-en-') > -1 ? 1 : 0;
+			var edOther = tinyMCE.get(editorIds[oppEdIndex]);
+			var colHasContent = t._checkColumnContent(t.editor);
+			var emptyCellMatch = new RegExp("^(?:<[^>]*>|&nbsp;|\\s)*$");
+			if (colHasContent.length == 3 && colHasContent[1] == false) {
+				if (colIndexes[0] == 1) {
+					colIndexes = Array(1,3);
+				} else {
+					colIndexes = Array(3,1);
+				}
+			}
+			edOther.dom.setHTML(edOther.dom.getRoot(), t.editor.getContent());
+			for (var idx=0;idx<2;idx++) {
+				var colNumber = colIndexes[idx] - 1; // convert to zero-based for arrays
+				var ed = tinyMCE.get(editorIds[idx]), d = ed.getDoc(), b = ed.getBody();
+				var tables = ed.dom.select('body > table, body > div > table');
+				for (var tbl=0; tbl<tables.length; tbl++) {
+					var contentBuffer = '';
+					var rows = ed.dom.select('tbody > tr, thead > tr',tables[tbl]);
+					for (var trw=0; trw<rows.length; trw++) {
+						var tcells = ed.dom.select('th, td',rows[trw]);
+						if (tcells.length < colNumber+1) {
+							alert(ed.getLang('wetkitcleanup.not_exists_chosen_column'));
+							return;
+						}
+						if (ed.dom.select('p, div, ul, ol',tcells[colNumber]).length > 0) {
+							contentBuffer += tcells[colNumber].innerHTML;
+						} else {
+							contentBuffer += '<p>' + tcells[colNumber].innerHTML + '</p>';
+						}
+					}
+					ed.dom.setOuterHTML(tables[tbl],contentBuffer);
+				}
+			}
+		},
+
 		_addTableHeaders : function(useThead) {
 			var t = this, ed = t.editor, nl, i, d = ed.getDoc(), b = ed.getBody();
 			var tables = d.getElementsByTagName(useThead ? "thead" : "table");
@@ -319,10 +495,26 @@
 					var tcCount = tcells ? tcells.length : 0;
 					for (var tc=0; tc<tcCount; tc++) {
 						var td = tcells[tc];
-						if (tcells[tc] && tcells[tc].innerHTML.test(dataCellMatch)) {
+						if (tcells[tc] && dataCellMatch.test(tcells[tc].innerHTML)) {
 							tcells[tc].innerHTML = tcells[tc].innerHTML.replace(dataCellMatch, "$1");
 							ed.dom.setStyle(tcells[tc], "text-align", useAlign);
 						}
+					}
+				}
+			}
+		},
+		
+		_tableDataParas : function() {
+			var t = this, ed = t.editor, nl, i, d = ed.getDoc(), b = ed.getBody();
+			var tables = Array();
+			tables = d.getElementsByTagName("table");
+			for (var tbl=0; tables[tbl]; tbl++) {
+				var tcells = tables[tbl].getElementsByTagName("td");
+				for (var tc=0; tc<tcells.length; tc++) {
+					var td = tcells[tc];
+					var p = td.getElementsByTagName("p");
+					if (p.length == 1) {
+						td.innerHTML = p[0].innerHTML;
 					}
 				}
 			}
@@ -404,8 +596,8 @@
 				var cellIDNum = 1;
 				if (!tableElm.id) {
 					// loop until we don't find a match
-					for (tid = 1000;d.getElementById('tbl'+tid);tid++) {}
-					tblId = 'tbl'+tid;
+					for (tid = 1000;d.getElementById('table-'+tid);tid++) {}
+					tblId = 'table-'+tid;
 					tableElm.id = tblId;
 				}
 				var tblId = tableElm.id;
@@ -416,19 +608,9 @@
 				for (var y = 0; y<grid.length;y++) {
 					for (var x = 0; x<grid[y].length;x++) {
 						// grid object contains: part,real,elm,rowspan,colspan
-						if (!grid[y][x].elm.innerHTML.test(emptyCellMatch)) {
+						if (!emptyCellMatch.test(grid[y][x].elm.innerHTML)) {
 							if (grid[y][x].real && grid[y][x].elm.tagName.toLowerCase() == 'th') {
-								var headers = [];
-								for (var hr=0;hr<hrdInfo.length;hr++) {
-									if (hrdInfo[hr] && hrdInfo[hr][x] && hrdInfo[hr][x].id && headers.indexOf(hrdInfo[hr][x].id) == -1 && (hrdInfo[hr][x].scope == 'col' || hrdInfo[hr][x].scope == 'colgroup'))
-										headers[headers.length] = hrdInfo[hr][x].id;
-								}
-								for (var hc=0;hrdInfo[y] && hc<hrdInfo[y].length;hc++) {
-									if (hrdInfo[y][hc] && hrdInfo[y][hc].id && headers.indexOf(hrdInfo[y][hc].id) == -1 && (hrdInfo[y][hc].scope == 'row' || hrdInfo[y][hc].scope == 'rowgroup'))
-										headers[headers.length] = hrdInfo[y][hc].id;
-								}
-								ed.dom.setAttrib(grid[y][x].elm, "headers", headers.join(' '));
-								grid[y][x].elm.id = tblId + '-tc' + cellIDNum;
+								grid[y][x].elm.id = tblId + '-r' + (y+1) + '-c' + (x+1);
 								if (!hrdInfo[y])
 									hrdInfo[y] = [];
 								for (var cc=x;cc<x+grid[y][x].colspan;cc++) {
@@ -436,15 +618,25 @@
 										if (!hrdInfo[rc])
 											hrdInfo[rc] = [];
 										if (!hrdInfo[rc][cc])
-											hrdInfo[rc][cc] = {id:grid[y][x].elm.id, scope: ed.dom.getAttrib(grid[y][x].elm, "scope")};
+											hrdInfo[rc][cc] = {id:grid[y][x].elm.id, section:ed.dom.getParent(grid[y][x].elm,'thead,tfoot,tbody').nodeName.toLowerCase(), scope: ed.dom.getAttrib(grid[y][x].elm, "scope")};
 									}
 								}
+								ed.dom.setAttrib(grid[y][x].elm, 'headers',null);
 								cellIDNum++;
 							} else if (grid[y][x].real) {
 								var headers = [];
+								var colgroupHeader = null;
 								for (var hr=0;hr<hrdInfo.length;hr++) {
-									if (hrdInfo[hr] && hrdInfo[hr][x] && hrdInfo[hr][x].id && headers.indexOf(hrdInfo[hr][x].id) == -1 && (hrdInfo[hr][x].scope == 'col' || hrdInfo[hr][x].scope == 'colgroup'))
-										headers[headers.length] = hrdInfo[hr][x].id;
+									if (hrdInfo[hr] && hrdInfo[hr][x] && hrdInfo[hr][x].id && headers.indexOf(hrdInfo[hr][x].id) == -1 && (hrdInfo[hr][x].scope == 'col' || hrdInfo[hr][x].scope == 'colgroup')) {
+										if (hrdInfo[hr][x].scope == 'colgroup' && hrdInfo[hr][x].section == 'tbody') {
+											colgroupHeader = hrdInfo[hr][x].id;
+										} else {
+											headers[headers.length] = hrdInfo[hr][x].id;
+										}
+									}
+								}
+								if (colgroupHeader != null) {
+									headers[headers.length] = colgroupHeader;
 								}
 								for (var hc=0;hrdInfo[y] && hc<hrdInfo[y].length;hc++) {
 									if (hrdInfo[y][hc] && hrdInfo[y][hc].id && headers.indexOf(hrdInfo[y][hc].id) == -1 && (hrdInfo[y][hc].scope == 'row' || hrdInfo[y][hc].scope == 'rowgroup'))
