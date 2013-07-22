@@ -53,10 +53,14 @@ projects[caption_filter][patch][1432092] = http://drupal.org/files/1432092-butto
 
 ; Include our Editors
 
-libraries[ckeditor][download][type] = git
-libraries[ckeditor][download][revision] = 336df63
-libraries[ckeditor][download][url] = https://github.com/ckeditor/ckeditor-releases.git
+libraries[ckeditor][download][type] = get
+libraries[ckeditor][download][url] = http://download.cksource.com/CKEditor/CKEditor/CKEditor%204.1.3/ckeditor_4.1.3_standard.zip
+libraries[ckeditor][patch][1561882] = http://drupal.org/files/1561882-cirkuit-theme-tinymce-3.5.8.patch
 
+;libraries[tinymce][download][type] = get
+;libraries[tinymce][download][url] = https://github.com/downloads/tinymce/tinymce/tinymce_3.5.8.zip
+;libraries[tinymce][patch][1561882] = http://drupal.org/files/1561882-cirkuit-theme-tinymce-3.5.8.patch
+ 
 libraries[markitup][download][type] = get
 libraries[markitup][download][url] = https://github.com/markitup/1.x/tarball/master
 libraries[markitup][patch][1715642] = http://drupal.org/files/1715642-adding-html-set-markitup-editor.patch
