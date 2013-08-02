@@ -12,6 +12,7 @@ projects[wysiwyg][download][revision] = 31840cb
 projects[wysiwyg][download][branch] = 7.x-2.x
 projects[wysiwyg][patch][1489096] = http://drupal.org/files/wysiwyg-table-format-1489096-7.patch
 projects[wysiwyg][patch][1786732] = http://drupal.org/files/wysiwyg-arbitrary_image_paths_markitup-1786732-3.patch
+projects[wysiwyg][patch][1802394] = http://drupal.org/files/wysiwyg-1802394-4.patch
 
 projects[wysiwyg_filter][version] = 1.x-dev
 projects[wysiwyg_filter][type] = module
@@ -43,7 +44,7 @@ projects[image_resize_filter][download][revision] = da3bbd6
 projects[image_resize_filter][download][branch] = 7.x-1.x
 projects[image_resize_filter][patch][1708366] = http://drupal.org/files/1708366-7.patch
 
-projects[caption_filter][version] = 1.x-dev
+projects[caption_filter][version] = 1.3
 projects[caption_filter][type] = module
 projects[caption_filter][subdir] = contrib
 projects[caption_filter][download][type] = git
@@ -60,7 +61,7 @@ libraries[ckeditor][patch][1561882] = http://drupal.org/files/1561882-cirkuit-th
 ;libraries[tinymce][download][type] = get
 ;libraries[tinymce][download][url] = https://github.com/downloads/tinymce/tinymce/tinymce_3.5.8.zip
 ;libraries[tinymce][patch][1561882] = http://drupal.org/files/1561882-cirkuit-theme-tinymce-3.5.8.patch
- 
+
 libraries[markitup][download][type] = get
 libraries[markitup][download][url] = https://github.com/markitup/1.x/tarball/master
 libraries[markitup][patch][1715642] = http://drupal.org/files/1715642-adding-html-set-markitup-editor.patch
