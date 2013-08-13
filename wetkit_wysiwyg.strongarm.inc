@@ -29,7 +29,7 @@ function wetkit_wysiwyg_strongarm() {
   $strongarm->value = array(
     0 => 'upload',
     1 => 'media_default--media_browser_1',
-    2 => 'media_default--media_browser_my_files',
+    2 => 'media_internet',
   );
   $export['media__wysiwyg_browser_plugins'] = $strongarm;
 
