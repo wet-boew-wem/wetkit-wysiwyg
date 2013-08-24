@@ -32,8 +32,8 @@ function wetkit_wysiwyg_configure_form($form, &$form_state) {
     '#type' => 'select',
     '#required' => TRUE,
     '#options' => array(
-      '1' => 'Show',
-      '0' => 'Do Not Show',
+      '1' => t('Show'),
+      '0' => t('Do Not Show'),
     ),
     '#default_value' => variable_get('wetkit_wysiwyg_show_format_details', 0),
     '#description' => t('Do you want WetKit to show the help text and text format guidelines?'),
@@ -215,7 +215,7 @@ function wetkit_wysiwyg_wysiwyg_editor_settings_alter(&$settings, $context) {
 
       // Startup Outline Blocks
       $settings['startupOutlineBlocks'] = FALSE;
-   
+
       // On Bean pages lets make this smaller.
       if (arg(0)=='block' && is_string(arg(1))) {
         $settings['height'] = 200;
