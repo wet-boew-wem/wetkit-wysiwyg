@@ -22,8 +22,12 @@ projects[wysiwyg_filter][download][branch] = 7.x-1.x
 projects[wysiwyg_filter][patch][1687794] = http://drupal.org/files/wysiwyg_filter-1687794-1-skip-validation-if-filter-disabled.patch
 projects[wysiwyg_filter][patch][1543044] = http://drupal.org/files/wysiwyg_filter-missing-argument-1543044-2_1.patch
 
-projects[wysiwyg_template][version] = 2.9
+projects[wysiwyg_template][version] = 2.x-dev
+projects[wysiwyg_template][type] = module
 projects[wysiwyg_template][subdir] = contrib
+projects[wysiwyg_template][download][type] = git
+projects[wysiwyg_template][download][revision] = a9d25c5
+projects[wysiwyg_template][download][branch] = 7.x-2.x
 
 ; The WYSIWYG Helpers
 
