@@ -19,6 +19,7 @@ function wetkit_wysiwyg_strongarm() {
     1 => 'video',
     2 => 'audio',
     3 => 'document',
+    4 => 'wetkit_video',
   );
   $export['media__wysiwyg_allowed_types'] = $strongarm;
 
@@ -29,7 +30,7 @@ function wetkit_wysiwyg_strongarm() {
   $strongarm->value = array(
     0 => 'upload',
     1 => 'media_default--media_browser_1',
-    2 => 'media_internet',
+    2 => 'media_default--media_browser_my_files',
   );
   $export['media__wysiwyg_browser_plugins'] = $strongarm;
 

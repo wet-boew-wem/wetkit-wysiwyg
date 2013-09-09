@@ -21,7 +21,7 @@ function wetkit_wysiwyg_defaultconfig_features() {
 function wetkit_wysiwyg_defaultconfig_user_default_permissions() {
   $permissions = array();
 
-  // Exported permission: use text format wetkit_html_text.
+  // Exported permission: 'use text format wetkit_html_text'.
   $permissions['use text format wetkit_html_text'] = array(
     'name' => 'use text format wetkit_html_text',
     'roles' => array(
@@ -31,7 +31,7 @@ function wetkit_wysiwyg_defaultconfig_user_default_permissions() {
     'module' => 'filter',
   );
 
-  // Exported permission: use text format wetkit_wysiwyg_text.
+  // Exported permission: 'use text format wetkit_wysiwyg_text'.
   $permissions['use text format wetkit_wysiwyg_text'] = array(
     'name' => 'use text format wetkit_wysiwyg_text',
     'roles' => array(
