@@ -71,10 +71,8 @@ function wetkit_wysiwyg_wysiwyg_default_profiles() {
           'Indent' => 1,
           'Undo' => 1,
           'Redo' => 1,
-          'Link' => 1,
           'Unlink' => 1,
           'Anchor' => 1,
-          'Image' => 1,
           'Superscript' => 1,
           'Subscript' => 1,
           'Blockquote' => 1,
@@ -98,9 +96,6 @@ function wetkit_wysiwyg_wysiwyg_default_profiles() {
         ),
         'linkit' => array(
           'linkit' => 1,
-        ),
-        'templates' => array(
-          'Templates' => 1,
         ),
         'drupal' => array(
           'media' => 1,

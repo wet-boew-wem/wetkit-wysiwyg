@@ -193,6 +193,9 @@ function wetkit_wysiwyg_wysiwyg_editor_settings_alter(&$settings, $context) {
       //);
       $settings['allowedContent'] = TRUE;
 
+      // Body Class.
+      $settings['bodyClass'] = 'wysiwyg-editor-body';
+
       // Editor Configuration.
       $settings['emailProtection'] = 'encode';
       $settings['find_highlight'] = array(
