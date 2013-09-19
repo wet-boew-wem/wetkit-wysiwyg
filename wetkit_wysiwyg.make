@@ -39,6 +39,13 @@ projects[linkit][download][revision] = 4356658
 projects[linkit][download][branch] = 7.x-2.x
 projects[linkit][patch][1793896] = http://drupal.org/files/entitylanguages-1793896-1.patch
 
+projects[linkit_uuid][version] = 1.x-dev
+projects[linkit_uuid][subdir] = contrib
+projects[linkit_uuid][type] = module
+projects[linkit_uuid][download][type] = git
+projects[linkit_uuid][download][revision] = 09e0c94
+projects[linkit_uuid][download][branch] = 7.x-1.x
+
 projects[image_resize_filter][version] = 1.x-dev
 projects[image_resize_filter][type] = module
 projects[image_resize_filter][subdir] = contrib

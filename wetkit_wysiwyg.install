@@ -17,3 +17,12 @@ function wetkit_wysiwyg_uninstall() {
     }
   }
 }
+
+/**
+ * Implements hook_update_n().
+ */
+function wetkit_wysiwyg_update_7101() {
+  if (!module_exists('linkit_uuid')) {
+    module_enable(array('linkit_uuid'));
+  }
+}
