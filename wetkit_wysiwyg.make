@@ -8,31 +8,16 @@ core = 7.x
 projects[wysiwyg][version] = 2.x-dev
 projects[wysiwyg][subdir] = contrib
 projects[wysiwyg][download][type] = git
-projects[wysiwyg][download][revision] = 31840cb
+projects[wysiwyg][download][revision] = ee64524
 projects[wysiwyg][download][branch] = 7.x-2.x
 projects[wysiwyg][patch][507696] = http://drupal.org/files/wysiwyg_field_size_507696_96_0.patch
 projects[wysiwyg][patch][1489096] = http://drupal.org/files/wysiwyg-table-format-1489096-7.patch
 projects[wysiwyg][patch][1786732] = http://drupal.org/files/wysiwyg-arbitrary_image_paths_markitup-1786732-3.patch
-
-projects[wysiwyg_filter][version] = 1.x-dev
-projects[wysiwyg_filter][type] = module
-projects[wysiwyg_filter][subdir] = contrib
-projects[wysiwyg_filter][download][type] = git
-projects[wysiwyg_filter][download][revision] = 6cbb1f4
-projects[wysiwyg_filter][download][branch] = 7.x-1.x
-projects[wysiwyg_filter][patch][1687794] = http://drupal.org/files/wysiwyg_filter-1687794-1-skip-validation-if-filter-disabled.patch
-projects[wysiwyg_filter][patch][1543044] = http://drupal.org/files/wysiwyg_filter-missing-argument-1543044-2_1.patch
-
-;projects[wysiwyg_template][version] = 2.x-dev
-;projects[wysiwyg_template][type] = module
-;projects[wysiwyg_template][subdir] = contrib
-;projects[wysiwyg_template][download][type] = git
-;projects[wysiwyg_template][download][revision] = a9d25c5
-;projects[wysiwyg_template][download][branch] = 7.x-2.x
+projects[wysiwyg][patch][1956778] = http://drupal.org/files/wysiwyg-ckeditor-acf-1956778-16.patch
 
 ; The WYSIWYG Helpers
 
-projects[linkit][version] = 1.x-dev
+projects[linkit][version] = 2.x-dev
 projects[linkit][type] = module
 projects[linkit][subdir] = contrib
 projects[linkit][download][type] = git
@@ -67,10 +52,6 @@ projects[caption_filter][patch][1432092] = http://drupal.org/files/1432092-butto
 
 libraries[ckeditor][download][type] = get
 libraries[ckeditor][download][url] = http://download.cksource.com/CKEditor/CKEditor/CKEditor%204.1.3/ckeditor_4.1.3_standard.zip
-
-;libraries[tinymce][download][type] = get
-;libraries[tinymce][download][url] = https://github.com/downloads/tinymce/tinymce/tinymce_3.5.8.zip
-;libraries[tinymce][patch][1561882] = http://drupal.org/files/1561882-cirkuit-theme-tinymce-3.5.8.patch
 
 libraries[markitup][download][type] = get
 libraries[markitup][download][url] = https://github.com/markitup/1.x/tarball/master

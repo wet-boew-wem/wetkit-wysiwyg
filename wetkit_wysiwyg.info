@@ -14,7 +14,6 @@ dependencies[] = media
 dependencies[] = strongarm
 dependencies[] = uuid_link
 dependencies[] = wysiwyg
-dependencies[] = wysiwyg_filter
 stylesheets[all][] = css/wetkit-wysiwyg.css
 features[ctools][] = linkit:linkit_profiles:1
 features[ctools][] = strongarm:strongarm:1
