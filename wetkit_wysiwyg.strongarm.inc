@@ -15,11 +15,11 @@ function wetkit_wysiwyg_strongarm() {
   $strongarm->api_version = 1;
   $strongarm->name = 'media__wysiwyg_allowed_types';
   $strongarm->value = array(
-    0 => 'image',
-    1 => 'video',
-    2 => 'audio',
-    3 => 'document',
-    4 => 'wetkit_video',
+    0 => 'wetkit_video',
+    1 => 'image',
+    2 => 'video',
+    3 => 'audio',
+    4 => 'document',
   );
   $export['media__wysiwyg_allowed_types'] = $strongarm;
 
@@ -38,7 +38,7 @@ function wetkit_wysiwyg_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'media__wysiwyg_upload_directory';
-  $strongarm->value = '';
+  $strongarm->value = 'media';
   $export['media__wysiwyg_upload_directory'] = $strongarm;
 
   return $export;

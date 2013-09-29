@@ -102,21 +102,15 @@ function wetkit_wysiwyg_wysiwyg_default_profiles() {
           'break' => 1,
         ),
       ),
-      'toolbar_loc' => 'top',
-      'toolbar_align' => 'left',
-      'path_loc' => 'bottom',
-      'resizing' => 1,
+      'toolbarLocation' => 'top',
+      'resize_enabled' => 1,
       'default_toolbar_grouping' => 1,
-      'verify_html' => 1,
-      'preformatted' => 1,
-      'convert_fonts_to_spans' => 1,
-      'remove_linebreaks' => 0,
-      'apply_source_formatting' => 1,
-      'paste_auto_cleanup_on_paste' => 1,
-      'block_formats' => 'h1,h2,h3,h4,h5,h6',
+      'simple_source_formatting' => 0,
+      'acf_mode' => 0,
+      'acf_allowed_content' => '',
       'css_setting' => 'self',
       'css_path' => '',
-      'css_classes' => 'module=div.module
+      'stylesSet' => 'module=div.module
 module-related=div.module-related
 module-billboard=div.module-billboard
 module-event=div.module-event
@@ -127,7 +121,9 @@ module-contact=div.module-contact
 module-news=div.module-news
 module-spotlight=div.module-spotlight
 module-comment=div.module-comment',
-      'advanced__active_tab' => 'edit-basic',
+      'block_formats' => 'h1,h2,h3,h4,h5,h6',
+      'advanced__active_tab' => 'edit-css',
+      'forcePasteAsPlainText' => 0,
     ),
   );
 
