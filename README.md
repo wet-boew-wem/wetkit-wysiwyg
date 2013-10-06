@@ -1,15 +1,36 @@
 WetKit WYSIWYG
 ==============
-Integrates a WYSIWYG into the WxT-Drupal distribution
+Adds and configures CKEditor into the Drupal WxT distribution.
 
 Key Features
-* Gives you the choice of using TinyMCE 3.5.8 (Stable + tested) or CKEditor 4.1.2 (stable)
-* One of the most refined TinyMCE WYSIWYG integrations in Drupal
-* A good MarkitUp Editor for Source Code
-* Switching WYSIWYG + INLINE WYSIWYG + HTML text formats
-* HTML5 integration with WYSIWYG Filter
-* Integration with Linkit module for adding WYSIWYG Link
-* Addition of classes to wysiwyg filter
-* Addition of French Language Support in the WYSIWYG
-* Integration of an Accessibility Checker for TinyMCE
-* Support for Caption Filter's WYSIWYG Captions
+------------
+
+* Provides integration with CKEditor 4.1+ and legacy support for TinyMCE (3.5.8)
+* Provides integration with the Markitup editor for those who prefer to enforce markdown
+* Leverages LinkIT module to provide content link additions from within the WYSIWYG
+* Enforce that all content is leveraging UUID to assist in content staging
+* Ensures that the WYSIWYG also has support for multilingual (french by default)
+* Integration of an Accessibility Checker for TinyMCE (to be ported to CKEditor)
+
+Architecture
+------------
+
+The best and closer to the bare metal way of how this module dependencies with drupal contrib can be found below:
+
+Make File: wetkit_wysiwyg.make
+
+If you are unaware of what a make file is please consult our 'Drush Make Theory' for happy Drupal development. It just might make your development experience with Drupal more enjoyable.
+
+End User Interaction
+--------------------
+
+Now that we have provided the developers some information to digest lets focus on how the end users will interact with this module.
+
+
+<!-- Links Referenced -->
+
+[ckeditor]:                http://coderwall.com/sylus
+[linkit]:                  http://coderwall.com/sylus
+[markitup]:                http://coderwall.com/sylus
+[tinymce]:                 http://coderwall.com/sylus
+[uuid]:                    http://coderwall.com/sylus
