@@ -254,6 +254,10 @@ function wetkit_wysiwyg_wysiwyg_editor_settings_alter(&$settings, $context) {
       elseif ((variable_get('wetkit_wetboew_theme', 0) == 3)) {
         $wet_theme = 'theme-base';
       }
+      // OGPL Theme.
+      elseif ((variable_get('wetkit_wetboew_theme', 0) == 4)) {
+        $wet_theme = 'theme-ogpl';
+      }
       // WET Theme.
       else {
         $wet_theme = 'theme-wet-boew';
