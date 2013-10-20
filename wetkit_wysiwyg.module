@@ -50,6 +50,23 @@ function wetkit_wysiwyg_ctools_plugin_directory($module, $plugin) {
 }
 
 /**
+ * Implements hook_linkit_search_plugin_entities_alter().
+ */
+function wetkit_wysiwyg_linkit_search_plugin_entities_alter(&$plugins) {
+  foreach ($plugins as $plugin_name => $plugin) {
+    if ($plugin['entity_type'] == 'bean') {
+      unset($plugins[$plugin_name]);
+    }
+    if ($plugin['entity_type'] == 'menu_link') {
+      unset($plugins[$plugin_name]);
+    }
+    if ($plugin['entity_type'] == 'taxonomy_term') {
+      unset($plugins[$plugin_name]);
+    }
+  }
+}
+
+/**
  * Implements hook_wysiwyg_plugin().
  */
 function wetkit_wysiwyg_wysiwyg_plugin($editor) {
@@ -212,6 +229,9 @@ function wetkit_wysiwyg_wysiwyg_editor_settings_alter(&$settings, $context) {
 
       // Startup Outline Blocks.
       $settings['startupOutlineBlocks'] = FALSE;
+
+      // Startup Focus.
+      $settings['startupFocus'] = TRUE;
 
       // Enable SCAYT by default.
       $settings['scayt_autoStartup'] = FALSE;

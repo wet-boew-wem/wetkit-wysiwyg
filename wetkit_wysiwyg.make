@@ -17,20 +17,12 @@ projects[wysiwyg][patch][1956778] = http://drupal.org/files/wysiwyg-ckeditor-acf
 
 ; The WYSIWYG Helpers
 
-projects[linkit][version] = 2.x-dev
+projects[linkit][version] = 3.x-dev
 projects[linkit][type] = module
 projects[linkit][subdir] = contrib
 projects[linkit][download][type] = git
-projects[linkit][download][revision] = 4356658
-projects[linkit][download][branch] = 7.x-2.x
-projects[linkit][patch][1793896] = http://drupal.org/files/entitylanguages-1793896-1.patch
-
-projects[linkit_uuid][version] = 1.x-dev
-projects[linkit_uuid][subdir] = contrib
-projects[linkit_uuid][type] = module
-projects[linkit_uuid][download][type] = git
-projects[linkit_uuid][download][revision] = 09e0c94
-projects[linkit_uuid][download][branch] = 7.x-1.x
+projects[linkit][download][revision] = 247cd5f
+projects[linkit][download][branch] = 7.x-3.x
 
 projects[image_resize_filter][version] = 1.x-dev
 projects[image_resize_filter][type] = module

@@ -38,4 +38,4 @@ div .markItUpHeader ul .markItUpSeparator { margin-top: 4px; }
 div.ctools-modal-content .format-toggle, .format-toggle { float: right; margin-top: 5px; margin-bottom: 5px; }
 
 /** CKEditor */
-.wysiwyg-editor-body { margin: 10px !important; }
+.wysiwyg-editor-body { margin: 10px !important; height: 400px;}

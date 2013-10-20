@@ -9,7 +9,6 @@ dependencies[] = features
 dependencies[] = filter
 dependencies[] = image_resize_filter
 dependencies[] = linkit
-dependencies[] = linkit_uuid
 dependencies[] = media
 dependencies[] = strongarm
 dependencies[] = uuid_link
