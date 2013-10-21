@@ -98,8 +98,8 @@ function wetkit_wysiwyg_default_linkit_profiles() {
       ),
     ),
     'autocomplete' => array(
-      'charLimit' => '3',
-      'wait' => '350',
+      'charLimit' => '5',
+      'wait' => '450',
       'remoteTimeout' => '10000',
     ),
   );
