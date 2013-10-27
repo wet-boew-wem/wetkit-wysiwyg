@@ -3,7 +3,7 @@
 api = 2
 core = 7.x
 
-; The WYSIWYG Module Family
+; Contrib
 
 projects[wysiwyg][version] = 2.x-dev
 projects[wysiwyg][subdir] = contrib
@@ -14,8 +14,6 @@ projects[wysiwyg][patch][507696] = http://drupal.org/files/wysiwyg_field_size_50
 projects[wysiwyg][patch][1489096] = http://drupal.org/files/wysiwyg-table-format-1489096-7.patch
 projects[wysiwyg][patch][1786732] = http://drupal.org/files/wysiwyg-arbitrary_image_paths_markitup-1786732-3.patch
 projects[wysiwyg][patch][1956778] = http://drupal.org/files/wysiwyg-ckeditor-acf-1956778-16.patch
-
-; The WYSIWYG Helpers
 
 projects[linkit][version] = 3.x-dev
 projects[linkit][type] = module
@@ -38,9 +36,8 @@ projects[caption_filter][version] = 1.3
 projects[caption_filter][type] = module
 projects[caption_filter][subdir] = contrib
 projects[caption_filter][download][type] = git
-projects[caption_filter][download][revision] = 6ab247f
+projects[caption_filter][download][revision] = b8097ee
 projects[caption_filter][download][branch] = 7.x-1.x
-projects[caption_filter][patch][1432092] = http://drupal.org/files/1432092-button-and-image.patch
 
 ; Include our Editors
 
