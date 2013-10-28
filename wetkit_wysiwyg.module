@@ -394,7 +394,7 @@ function wetkit_wysiwyg_wysiwyg_editor_settings_alter(&$settings, $context) {
         foreach ($settings['extended_valid_elements'] as $tag) {
           list($tag, $allowed_attributes) = explode('[', $tag);
           $allowed_attributes = explode('|', trim($allowed_attributes, ']'));
-          foreach ($allowed_attributes as $key => $attribute) {
+          foreach ($allowed_attributes as $attribute) {
             $settings_array[$tag][$attribute] = $attribute;
           }
         }
