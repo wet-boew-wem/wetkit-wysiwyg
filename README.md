@@ -1,5 +1,5 @@
-WYSIWYG
-=======
+WxT WYSIWYG
+===========
 Adds and configures [CKEditor][ckeditor] and optionally [TinyMCE][tinymce] for [Drupal WxT][drupalwxt].
 
 Key Features
