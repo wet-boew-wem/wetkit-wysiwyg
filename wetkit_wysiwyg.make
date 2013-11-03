@@ -42,7 +42,7 @@ projects[wysiwyg][patch][1956778] = http://drupal.org/files/wysiwyg-ckeditor-acf
 ; Include our Editors
 
 libraries[ckeditor][download][type] = get
-libraries[ckeditor][download][url] = http://download.cksource.com/CKEditor/CKEditor/CKEditor%204.1.3/ckeditor_4.1.3_standard.zip
+libraries[ckeditor][download][url] = http://download.cksource.com/CKEditor/CKEditor/CKEditor%204.2.2/ckeditor_4.2.2_standard.zip
 
 libraries[markitup][download][type] = get
 libraries[markitup][download][url] = https://github.com/markitup/1.x/tarball/master

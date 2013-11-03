@@ -201,9 +201,6 @@ function wetkit_wysiwyg_wysiwyg_editor_settings_alter(&$settings, $context) {
         drupal_get_path('module', 'wetkit_wysiwyg') . '/css/wetkit-wysiwyg.css',
       );
 
-      // Allow extra elements for Media module http://drupal.org/node/1963270.
-      $settings['allowedContent'] = TRUE;
-
       // Body Class.
       $settings['bodyClass'] = 'wysiwyg-editor-body';
 

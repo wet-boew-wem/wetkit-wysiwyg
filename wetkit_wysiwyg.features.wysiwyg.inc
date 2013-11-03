@@ -105,7 +105,7 @@ function wetkit_wysiwyg_wysiwyg_default_profiles() {
       'toolbarLocation' => 'top',
       'resize_enabled' => 1,
       'default_toolbar_grouping' => 1,
-      'simple_source_formatting' => 0,
+      'simple_source_formatting' => 1,
       'acf_mode' => 0,
       'acf_allowed_content' => '',
       'css_setting' => 'self',
@@ -122,7 +122,7 @@ module-news=div.module-news
 module-spotlight=div.module-spotlight
 module-comment=div.module-comment',
       'block_formats' => 'h1,h2,h3,h4,h5,h6',
-      'advanced__active_tab' => 'edit-css',
+      'advanced__active_tab' => 'edit-output',
       'forcePasteAsPlainText' => 0,
     ),
   );
