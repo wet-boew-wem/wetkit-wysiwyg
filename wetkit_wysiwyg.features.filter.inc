@@ -18,11 +18,6 @@ function wetkit_wysiwyg_filter_default_formats() {
     'status' => 1,
     'weight' => -9,
     'filters' => array(
-      'caption_filter' => array(
-        'weight' => -49,
-        'status' => 1,
-        'settings' => array(),
-      ),
       'media_filter' => array(
         'weight' => -48,
         'status' => 1,
@@ -56,11 +51,6 @@ function wetkit_wysiwyg_filter_default_formats() {
     'status' => 1,
     'weight' => -10,
     'filters' => array(
-      'caption_filter' => array(
-        'weight' => -49,
-        'status' => 1,
-        'settings' => array(),
-      ),
       'media_filter' => array(
         'weight' => -48,
         'status' => 1,

@@ -5,21 +5,6 @@ core = 7.x
 
 ; Contrib
 
-projects[caption_filter][version] = 1.3
-projects[caption_filter][type] = module
-projects[caption_filter][subdir] = contrib
-projects[caption_filter][download][type] = git
-projects[caption_filter][download][revision] = b8097ee
-projects[caption_filter][download][branch] = 7.x-1.x
-
-projects[image_resize_filter][version] = 1.x-dev
-projects[image_resize_filter][type] = module
-projects[image_resize_filter][subdir] = contrib
-projects[image_resize_filter][download][type] = git
-projects[image_resize_filter][download][revision] = da3bbd6
-projects[image_resize_filter][download][branch] = 7.x-1.x
-projects[image_resize_filter][patch][1708366] = http://drupal.org/files/1708366-7.patch
-
 projects[linkit][version] = 3.x-dev
 projects[linkit][type] = module
 projects[linkit][subdir] = contrib
