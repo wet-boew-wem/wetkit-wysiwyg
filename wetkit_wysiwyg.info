@@ -8,6 +8,7 @@ dependencies[] = features
 dependencies[] = filter
 dependencies[] = linkit
 dependencies[] = media
+dependencies[] = picture
 dependencies[] = strongarm
 dependencies[] = uuid_link
 dependencies[] = wysiwyg

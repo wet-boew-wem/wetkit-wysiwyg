@@ -97,6 +97,9 @@ function wetkit_wysiwyg_wysiwyg_default_profiles() {
         'linkit' => array(
           'linkit' => 1,
         ),
+        'picture_ckeditor' => array(
+          'picture_ckeditor' => 1,
+        ),
         'drupal' => array(
           'media' => 1,
           'break' => 1,
@@ -122,7 +125,7 @@ module-news=div.module-news
 module-spotlight=div.module-spotlight
 module-comment=div.module-comment',
       'block_formats' => 'h1,h2,h3,h4,h5,h6',
-      'advanced__active_tab' => 'edit-output',
+      'advanced__active_tab' => 'edit-basic',
       'forcePasteAsPlainText' => 0,
     ),
   );
