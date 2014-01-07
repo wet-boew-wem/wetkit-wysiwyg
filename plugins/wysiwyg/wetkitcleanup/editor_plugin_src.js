@@ -58,9 +58,10 @@
 								if (ed.id == fld) {
 									ed.splitColumn.thisLang = lng;
 									ed.splitColumn.oppLang = lng == 'en' ? 'fr' : 'en';
-									if (tinyMCE.get(flds[ed.splitField.oppLang])) {
+									if (tinyMCE.get(flds[ed.splitColumn.oppLang])) {
 										ed.splitColumn.active = true;
 										ed.splitColumn.fields = flds;
+										console.log("Found a match set of editors. This editor is the "+lng+" editor");
 									}
 								}
 							}						
@@ -68,10 +69,16 @@
 					}
 
 
+					m.add({title : ed.getLang('wetkitcleanup.quick_fix_all'), onclick : function () {t._QuickFixAll()}}).setDisabled(0);
 					//m.add({title : 'Cleanup/Transformation Operations', 'class' : 'mceMenuItemTitle'}).setDisabled(1);
 					var sub = m.addMenu({title : ed.getLang('wetkitcleanup.convert_titles'), onclick : function () {return false;}, onmouseover : function () {alert(1);}}); 
 					sub.add({title : ed.getLang('wetkitcleanup.demote_titles'), onclick : function () {t._dropHeadingLevels()}}).setDisabled(0);
 					sub.add({title : ed.getLang('wetkitcleanup.promote_titles'), onclick : function () {t._liftHeadingLevels()}}).setDisabled(0);
+					var sub2 = sub.addMenu({title : ed.getLang('wetkitcleanup.create_toc_here'), onclick : function () {t._generateTOC(2,6)}}); 
+						sub2.add({title : ed.getLang('wetkitcleanup.toc_levels_2'), onclick : function () {t._generateTOC(2,2)}}).setDisabled(0);
+						sub2.add({title : ed.getLang('wetkitcleanup.toc_levels_23'), onclick : function () {t._generateTOC(2,3)}}).setDisabled(0);
+						sub2.add({title : ed.getLang('wetkitcleanup.toc_levels_234'), onclick : function () {t._generateTOC(2,4)}}).setDisabled(0);
+						sub2.add({title : ed.getLang('wetkitcleanup.toc_levels_all'), onclick : function () {t._generateTOC(2,6)}}).setDisabled(0);
 					t.hideHeading = sub.add({title : ed.getLang('wetkitcleanup.hide_heading_from_index'), onclick : function () {t._hideHeading(true)}}).setDisabled(0);
 					t.showHeading = sub.add({title : ed.getLang('wetkitcleanup.show_heading_in_index'), onclick : function () {t._hideHeading(false)}}).setDisabled(0);
 
@@ -93,7 +100,7 @@
 					sub.add({title : ed.getLang('wetkitcleanup.title_case'), onclick : function () {t._changeCaseIgnoreHTML("title")}}).setDisabled(0);
 
 					if (ed.splitColumn.active) {
-						sub = m.addMenu({title : ed.getLang('wetkitcleanup.fix_footnotes'), onclick : function () {t._fixFootnotes(ed.splitColumn.thisLang)}}); 
+						m.add({title : ed.getLang('wetkitcleanup.fix_footnotes'), onclick : function () {t._fixFootnotes(ed.splitColumn.thisLang)}}).setDisabled(0);
 					} else {
 						sub = m.addMenu({title : ed.getLang('wetkitcleanup.fix_footnotes'), onclick : function () {return false;}}); 
 						sub.add({title : ed.getLang('wetkitcleanup.fix_footnotes') + ' (' + ed.getLang('wetkitcleanup.set_language_en') + ')', onclick : function () {t._fixFootnotes('en')}}); 
@@ -117,7 +124,7 @@
 					sub.add({title : ed.getLang('wetkitcleanup.extract_column_2'), onclick : function () {t._extractTableColumn(2)}}).setDisabled(0);
 
 					//m.add({title : 'Quick Fix All', onclick : function () {t._QuickFixAll()}}).setDisabled(0);
-                         m.add({title : ed.getLang('wetkitcleanup.quick_fix_all'), onclick : function () {t._QuickFixAll()}}).setDisabled(0);
+                         //m.add({title : ed.getLang('wetkitcleanup.quick_fix_all'), onclick : function () {t._QuickFixAll()}}).setDisabled(0);
 					sub = m.addMenu({title : ed.getLang('wetkitcleanup.other_cleanup'), onclick : function () {return false;}}); 
 					sub.add({title : ed.getLang('wetkitcleanup.remove_empty_blocks'), onclick : function () {t._removeEmptyBlocks()}}).setDisabled(0);
 					sub.add({title : ed.getLang('wetkitcleanup.remove_table_dimensions'), onclick : function () {t._tableStripWidthHeight(false)}}).setDisabled(0);
@@ -156,7 +163,32 @@
 				t._tableDataAlign('right');
 			t._tableStripWidthHeight(false);
 			t._tableConvertAlignToStyles();
+			var emptyMatch = new RegExp("^(?:<[^>]*>|&nbsp;|\\s)*$");
 			var tags = null;
+			// remove any paragraph or heading that has only tags or whitespace
+			var tags = ed.dom.select('p,h1,h2,h3,h4,h5,h6');
+			for (var i=tags.length-1;i>=0;i--) {
+				if (emptyMatch.test(tags[i].innerHTML)) {
+					ed.dom.remove(tags[i]);
+				}
+			}
+			// remove strong and em from headings
+			var plainText = new RegExp("(?:<[^>]*>|&nbsp;|\\s)+",'g');
+			var tags = ed.dom.select('h1,h2,h3,h4,h5,h6');
+			for (var i=0;tags[i];i++) {
+				var pt = tags[i].innerHTML.replace(plainText,' ');
+				pt = pt.replace(/^\s+/,'').replace(/\s+$/,''); // trim
+				var rmTags = ed.dom.select('em,strong',tags[i]);
+				for (var j=rmTags.length-1;j>=0;j--) {
+					var it = rmTags[j].innerHTML.replace(plainText,' ');
+					it = it.replace(/^\s+/,'').replace(/\s+$/,''); // trim
+					// only replace if the whole string matches
+					if (it == pt) {
+						ed.dom.setOuterHTML(rmTags[j],rmTags[j].innerHTML);
+					}
+				}
+			}
+			// convert image attributes to styles
 			var tags = ed.dom.select('img[align],img[hspace],img[vspace]');
 			for (var i=0;tags[i];i++) {
 				if (ed.dom.getAttrib(tags[i], "align"))
@@ -165,12 +197,8 @@
 				ed.dom.setAttrib(tags[i], "hspace", null);
 				ed.dom.setAttrib(tags[i], "vspace", null);
 			}
-			var tags = ed.dom.select('table[align]');
-			for (var i=0;tags[i];i++) {
-				if (ed.dom.getAttrib(tags[i], "align") == 'right' || ed.dom.getAttrib(tags[i], "align") == 'left')
-					ed.dom.setStyles(tags[i], {"float": ed.dom.getAttrib(tags[i], "align")});
-				ed.dom.setAttrib(tags[i], "align", null);
-			}
+			// change attributes in table cells to style attributes instead
+			ed.dom.setAttrib(ed.dom.select('table[align]'), "align", null);
 			var tags = ed.dom.select('*[valign],*[align],*[nowrap],br[clear],*[bgcolor],*[cellpadding],*[cellspacing]');
 			for (var i=0;tags[i];i++) {
 				if (ed.dom.getAttrib(tags[i], "valign"))
@@ -190,13 +218,18 @@
 			// apply any unaccepted tracked changes in documents
 			newData = newData.replace(/<del [^>]+>.*?<\/del>/ig, "");
 			newData = newData.replace(/<ins [^>]+>(.*?)<\/ins>/ig, "$1");
+			// fix long hyphens used in URLs
 			newData = newData.replace(/%1e/g, "-");
+			// recode up arrows
 			newData = newData.replace(/(?:&uarr;|↑)/g, "&#8593;");
-			newData = newData.replace(/<(p|h[1-6])(?:>|\s[^>]*>)(?:&nbsp;|\s|<br[^>]* \/>|<\/?(?:em|strong|span|b|i)(?:>|\s[^>]*>))*<\/\1>/ig, "");
+			// add hard space in empty cells
 			newData = newData.replace(/(<td[^>]*>)\s*(<\/td>)/ig, "$1&nbsp;$2");
+			// remove line breaks that start or end paragraphs and heading
 			newData = newData.replace(/(<(?:p|h[1-6])(?:>|\s[^>]*>))(&nbsp;|\s|<br[^>]*>)+/ig, "$1");
 			newData = newData.replace(/(?:<(p|h[1-6])(?:>|\s[^>]*>))(&nbsp;|\s|<br[^>]*>)*<\/\1>/ig, "");
+			// remove repeated hard spaces
 			newData = newData.replace(/&nbsp;(&nbsp;)+\s/ig, " ");
+			// remove strong/em from wrapping whitespace/br
 			newData = newData.replace(/<(strong|em)>((?:&nbsp;|\s|<br \/>)*)<\/\1>/ig, "$2");
 			newData = newData.replace(/<(strong|em)>((?:&nbsp;|\s|<br \/>)*)<\/\1>/ig, "$2");
 
@@ -326,10 +359,10 @@
 			var firstNote = null;
 			var notesHTML = '';
 			each(dom.select('a'), function(a) {
-				if (a.getAttribute('href').test(fnRegEx)) {
+				if (fnRegEx.test(a.getAttribute('href'))) {
 					var match = fnRegEx.exec(a.getAttribute('href'));
 					dom.setOuterHTML(a,refPattern.replace(/%d/g,match[2]));
-				} else if (a.getAttribute('href').test(fnRefRegEx)) {
+				} else if (fnRefRegEx.test(a.getAttribute('href'))) {
 					var match = fnRefRegEx.exec(a.getAttribute('href'));
 					var p = dom.getParent(a,'p');
 					dom.remove(a);
