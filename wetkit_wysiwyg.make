@@ -5,6 +5,10 @@ core = 7.x
 
 ; Contrib
 
+projects[ckeditor][type] = module
+projects[ckeditor][version] = 1.13
+projects[ckeditor][subdir] = contrib
+
 projects[linkit][version] = 3.x-dev
 projects[linkit][type] = module
 projects[linkit][subdir] = contrib
@@ -28,7 +32,7 @@ projects[wysiwyg][patch][1956778] = http://drupal.org/files/wysiwyg-ckeditor-acf
 ; Include our Editors
 
 libraries[ckeditor][download][type] = get
-libraries[ckeditor][download][url] = http://download.cksource.com/CKEditor/CKEditor/CKEditor%204.2.2/ckeditor_4.2.2_standard.zip
+libraries[ckeditor][download][url] = http://download.cksource.com/CKEditor%20for%20Drupal/edit/ckeditor_4.3.2_edit.zip
 
 libraries[markitup][download][type] = get
 libraries[markitup][download][url] = https://github.com/markitup/1.x/tarball/master
