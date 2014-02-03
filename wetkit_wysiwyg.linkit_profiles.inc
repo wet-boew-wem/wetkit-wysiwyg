@@ -24,6 +24,10 @@ function wetkit_wysiwyg_default_linkit_profiles() {
       'plain_text' => 0,
     ),
     'search_plugins' => array(
+      'entity:field_collection_item' => array(
+        'enabled' => 0,
+        'weight' => '-10',
+      ),
       'entity:node' => array(
         'enabled' => 1,
         'weight' => '-10',
@@ -38,7 +42,7 @@ function wetkit_wysiwyg_default_linkit_profiles() {
       ),
     ),
     'entity:node' => array(
-      'result_description' => '',
+      'result_description' => '[node:title_field]',
       'bundles' => array(
         'wetkit_page' => 0,
         'deploy_content_moderated' => 0,

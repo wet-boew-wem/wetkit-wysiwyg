@@ -115,3 +115,10 @@ div.ctools-modal-content .format-toggle,
   margin: 10px !important;
   height: 400px;
 }
+
+/**
+ * LinkIT
+ */
+.better-autocomplete > .result.highlight > h4, .better-autocomplete > .result.highlight > p {
+  color: black;
+}
