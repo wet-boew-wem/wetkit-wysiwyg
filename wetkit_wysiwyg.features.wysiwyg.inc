@@ -83,6 +83,8 @@ function wetkit_wysiwyg_wysiwyg_default_profiles() {
           'Paste' => 1,
           'PasteText' => 1,
           'PasteFromWord' => 1,
+          'ShowBlocks' => 1,
+          'Format' => 1,
           'FontSize' => 1,
           'Styles' => 1,
           'Table' => 1,
@@ -113,7 +115,9 @@ function wetkit_wysiwyg_wysiwyg_default_profiles() {
       'acf_allowed_content' => '',
       'css_setting' => 'self',
       'css_path' => '',
-      'stylesSet' => 'module=div.module
+      'stylesSet' => 'float-left=div.float-left
+float-right=div.float-right
+module=div.module
 module-related=div.module-related
 module-billboard=div.module-billboard
 module-event=div.module-event
@@ -125,7 +129,7 @@ module-news=div.module-news
 module-spotlight=div.module-spotlight
 module-comment=div.module-comment',
       'block_formats' => 'h1,h2,h3,h4,h5,h6',
-      'advanced__active_tab' => 'edit-basic',
+      'advanced__active_tab' => 'edit-paste',
       'forcePasteAsPlainText' => 0,
     ),
   );
