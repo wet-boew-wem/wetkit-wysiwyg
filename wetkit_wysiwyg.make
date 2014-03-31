@@ -22,7 +22,6 @@ projects[wysiwyg][download][revision] = ee64524
 projects[wysiwyg][download][branch] = 7.x-2.x
 ; Support for markitup
 projects[wysiwyg][patch][507696] = http://drupal.org/files/wysiwyg_field_size_507696_96_0.patch
-projects[wysiwyg][patch][934976] = http://drupal.org/files/wysiwyg-one-format.934976.23-alt.patch
 projects[wysiwyg][patch][1489096] = http://drupal.org/files/wysiwyg-table-format-1489096-7.patch
 projects[wysiwyg][patch][1786732] = http://drupal.org/files/wysiwyg-arbitrary_image_paths_markitup-1786732-3.patch
 projects[wysiwyg][patch][1956778] = http://drupal.org/files/wysiwyg-ckeditor-acf-1956778-16.patch
