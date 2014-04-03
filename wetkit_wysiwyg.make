@@ -18,7 +18,7 @@ projects[linkit][patch][2160653] = http://drupal.org/files/issues/linkit_languag
 projects[wysiwyg][version] = 2.x-dev
 projects[wysiwyg][subdir] = contrib
 projects[wysiwyg][download][type] = git
-projects[wysiwyg][download][revision] = 05b9bf2
+projects[wysiwyg][download][revision] = 3cb63de
 projects[wysiwyg][download][branch] = 7.x-2.x
 ; Support for markitup
 projects[wysiwyg][patch][507696] = http://drupal.org/files/issues/wysiwyg_width_height_per_field-507696-114.patch
