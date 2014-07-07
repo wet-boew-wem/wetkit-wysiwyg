@@ -69,41 +69,26 @@ function wetkit_wysiwyg_linkit_search_plugin_entities_alter(&$plugins) {
 /**
  * Implements hook_wysiwyg_plugin().
  */
-function wetkit_wysiwyg_wysiwyg_plugin($editor) {
+function wetkit_wysiwyg_wysiwyg_plugin($editor, $version) {
   switch ($editor) {
-    case 'tinymce':
-      return array(
-        'spellchecker' => array(
-          'internal' => TRUE,
-          'buttons' => array(
-            'spellchecker' => t('Spell Check'),
+    case 'ckeditor':
+      if ($version >= 4) {
+        return array(
+          'codemirror' => array(
+            'url' => 'http://ckeditor.com/addon/codemirror',
+            'path' => drupal_get_path('module', 'wetkit_wysiwyg') . '/plugins/wysiwyg/codemirror',
+            'filename' => 'plugin.js',
+            'buttons' => array(
+              'codemirror' => t('Code Mirror'),
+            ),
+            'load' => TRUE,
+            'internal' => FALSE
           ),
-          'url' => 'http://wiki.moxiecode.com/index.php/TinyMCE:Plugins/spellchecker',
-          'load' => TRUE,
-        ),
-        'inlinepopups' => array(
-          'internal' => TRUE,
-          'url' => 'http://www.tinymce.com/wiki.php/Plugin:inlinepopups',
-          'load' => TRUE,
-        ),
-        'wetkitcleanup' => array(
-          'path' => drupal_get_path('module', 'wetkit_wysiwyg') . '/plugins/wysiwyg/wetkitcleanup',
-          'filename' => 'editor_plugin.js',
-          'buttons' => array(
-            'wetkitcleanup' => t('WetKit Cleanup Tools'),
-          ),
-          'extended_valid_elements' => array(
-            'div[!class|!id|!style|rel],-span[!class|!lang],a[id|name|class|href|rel|title]',
-          ),
-          'extensions' => array(
-            'wetkitcleanup' => t('WetKit Cleanup Tools'),
-          ),
-          'load' => TRUE,
-        ),
-      );
+        );
+      }
+      break;
   }
 }
-
 
 /**
  * Implements hook_element_info_alter().
@@ -226,6 +211,12 @@ function wetkit_wysiwyg_wysiwyg_editor_settings_alter(&$settings, $context) {
       $settings['scayt_maxSuggestions'] = 5;
       $settings['scayt_moreSuggestions'] = 'on';
       $settings['scayt_sLang'] = ($settings['language'] == 'fr') ? 'fr_CA' : 'en_CA';
+
+
+      $settings['codemirror'] = array(
+        'theme' => 'monokai',
+        'lineWrapping' => false,
+      );
       break;
 
     case 'markitup':
