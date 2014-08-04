@@ -53,6 +53,7 @@ function wetkit_wysiwyg_wysiwyg_default_profiles() {
       'default' => 1,
       'user_choose' => 0,
       'show_toggle' => 0,
+      'add_to_summaries' => 1,
       'theme' => 'advanced',
       'language' => 'en',
       'buttons' => array(
@@ -101,9 +102,6 @@ function wetkit_wysiwyg_wysiwyg_default_profiles() {
         ),
         'linkit' => array(
           'linkit' => 1,
-        ),
-        'picture_ckeditor' => array(
-          'picture_ckeditor' => 1,
         ),
         'codemirror' => array(
           'codemirror' => 1,
