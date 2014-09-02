@@ -9,16 +9,15 @@ projects[linkit][version] = 3.x-dev
 projects[linkit][type] = module
 projects[linkit][subdir] = contrib
 projects[linkit][download][type] = git
-projects[linkit][download][revision] = 247cd5f
+projects[linkit][download][revision] = 98daa03
 projects[linkit][download][branch] = 7.x-3.x
-projects[linkit][patch][2116251] = http://drupal.org/files/linkit_support_uuid-2116251-1.patch
-projects[linkit][patch][2116273] = http://drupal.org/files/linkit_fix_testing_plugins-2116273-1.patch
-projects[linkit][patch][2160653] = http://drupal.org/files/issues/linkit_languages_support-2160653-05.patch
+projects[linkit][patch][2116251] = http://drupal.org/files/issues/linkit_support_uuid-2116251-3.patch
+projects[linkit][patch][2160653] = http://drupal.org/files/issues/linkit_languages_support-2160653-06.patch
 
 projects[wysiwyg][version] = 2.x-dev
 projects[wysiwyg][subdir] = contrib
 projects[wysiwyg][download][type] = git
-projects[wysiwyg][download][revision] = f6f378e
+projects[wysiwyg][download][revision] = 37dc07d
 projects[wysiwyg][download][branch] = 7.x-2.x
 projects[wysiwyg][patch][1786732] = http://drupal.org/files/wysiwyg-arbitrary_image_paths_markitup-1786732-3.patch
 
