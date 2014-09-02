@@ -18,6 +18,13 @@
 		init : function(ed, url) {
 			var t = this;
 
+			ed.splitColumn = {
+				active:false,
+				thisLang:'en',
+				oppLang:'fr',
+				fields:{}
+			};
+
 			t.url = url;
 			t.editor = ed;
 			t.sbCtrl = null;
@@ -41,35 +48,37 @@
 				c = cm.createSplitButton(n, {title : ed.getLang('wetkitcleanup.title'), onclick : t._aboutPlugin, image : t.url + "/img/wetkitcleanup.png"});
 
 				c.onRenderMenu.add(function(c, m) {
-					var this_lang = 'en', opp_lang = 'fr', en_id = null, fr_id = null, is_multilingual = false;
-					var langMatch = ed.id.match(/-(en|fr)-/);
-					//var langMatch = ed.id.match(/_(en|fr)/);
-					if (langMatch && langMatch.length > 1) {
-						this_lang = langMatch[1];
-						if (this_lang == 'fr') {
-							opp_lang = 'en';
-							fr_id = ed.id;
-						} else {
-							en_id = ed.id;
-						}
-						var testId = ed.id.replace('-'+this_lang+'-','-'+opp_lang+'-');
-
-						//var testId = ed.id.replace('_'+this_lang,'_'+opp_lang);
-						if (tinyMCE.get(testId)) {
-							if (this_lang == 'fr') {
-								en_id = testId;
-							} else {
-								fr_id = testId;
-							}
-							is_multilingual = true;
+					// var this_lang = 'en', opp_lang = 'fr',this_lang_full = 'en', opp_lang_full = 'fr', en_id = null, fr_id = null, is_multilingual = false;
+					if (typeof(WET_EF_Splitter_Pairs) == 'object') {
+						var langList = Array('en','fr');
+						for (var i in WET_EF_Splitter_Pairs) {
+							var flds = WET_EF_Splitter_Pairs[i];
+							for (var l in langList) {
+								var lng = langList[l], fld = flds[lng];
+								if (ed.id == fld) {
+									ed.splitColumn.thisLang = lng;
+									ed.splitColumn.oppLang = lng == 'en' ? 'fr' : 'en';
+									if (tinyMCE.get(flds[ed.splitColumn.oppLang])) {
+										ed.splitColumn.active = true;
+										ed.splitColumn.fields = flds;
+										console.log("Found a match set of editors. This editor is the "+lng+" editor");
+									}
+								}
+							}						
 						}
 					}
 
 
+					m.add({title : ed.getLang('wetkitcleanup.quick_fix_all'), onclick : function () {t._QuickFixAll()}}).setDisabled(0);
 					//m.add({title : 'Cleanup/Transformation Operations', 'class' : 'mceMenuItemTitle'}).setDisabled(1);
 					var sub = m.addMenu({title : ed.getLang('wetkitcleanup.convert_titles'), onclick : function () {return false;}, onmouseover : function () {alert(1);}}); 
 					sub.add({title : ed.getLang('wetkitcleanup.demote_titles'), onclick : function () {t._dropHeadingLevels()}}).setDisabled(0);
 					sub.add({title : ed.getLang('wetkitcleanup.promote_titles'), onclick : function () {t._liftHeadingLevels()}}).setDisabled(0);
+					var sub2 = sub.addMenu({title : ed.getLang('wetkitcleanup.create_toc_here'), onclick : function () {t._generateTOC(2,6)}}); 
+						sub2.add({title : ed.getLang('wetkitcleanup.toc_levels_2'), onclick : function () {t._generateTOC(2,2)}}).setDisabled(0);
+						sub2.add({title : ed.getLang('wetkitcleanup.toc_levels_23'), onclick : function () {t._generateTOC(2,3)}}).setDisabled(0);
+						sub2.add({title : ed.getLang('wetkitcleanup.toc_levels_234'), onclick : function () {t._generateTOC(2,4)}}).setDisabled(0);
+						sub2.add({title : ed.getLang('wetkitcleanup.toc_levels_all'), onclick : function () {t._generateTOC(2,6)}}).setDisabled(0);
 					t.hideHeading = sub.add({title : ed.getLang('wetkitcleanup.hide_heading_from_index'), onclick : function () {t._hideHeading(true)}}).setDisabled(0);
 					t.showHeading = sub.add({title : ed.getLang('wetkitcleanup.show_heading_in_index'), onclick : function () {t._hideHeading(false)}}).setDisabled(0);
 
@@ -90,6 +99,14 @@
 					sub.add({title : ed.getLang('wetkitcleanup.sentence_case'), onclick : function () {t._changeCaseIgnoreHTML("sentence")}}).setDisabled(0);
 					sub.add({title : ed.getLang('wetkitcleanup.title_case'), onclick : function () {t._changeCaseIgnoreHTML("title")}}).setDisabled(0);
 
+					if (ed.splitColumn.active) {
+						m.add({title : ed.getLang('wetkitcleanup.fix_footnotes'), onclick : function () {t._fixFootnotes(ed.splitColumn.thisLang)}}).setDisabled(0);
+					} else {
+						sub = m.addMenu({title : ed.getLang('wetkitcleanup.fix_footnotes'), onclick : function () {return false;}}); 
+						sub.add({title : ed.getLang('wetkitcleanup.fix_footnotes') + ' (' + ed.getLang('wetkitcleanup.set_language_en') + ')', onclick : function () {t._fixFootnotes('en')}}); 
+						sub.add({title : ed.getLang('wetkitcleanup.fix_footnotes') + ' (' + ed.getLang('wetkitcleanup.set_language_fr') + ')', onclick : function () {t._fixFootnotes('fr')}}); 
+					}
+
 					sub = m.addMenu({title : ed.getLang('wetkitcleanup.process_acronyms'), onclick : function () {return false;}}); 
 					sub.add({title : ed.getLang('wetkitcleanup.process_acronyms_saved'), onclick : function () {t._findReplaceAcronyms(false)}}).setDisabled(0);
 					sub.add({title : ed.getLang('wetkitcleanup.process_acronyms_custom'), onclick : function () {t._findReplaceAcronyms(true)}}).setDisabled(0);
@@ -99,15 +116,15 @@
 					sub.add({title : ed.getLang('wetkitcleanup.set_language_fr'), onclick : function () {t._setLanguage('fr')}}).setDisabled(0);
 
 					sub = m.addMenu({title : ed.getLang('wetkitcleanup.extract_column'), onclick : function () {return false;}}); 
-					if (is_multilingual) {
-						sub.add({title : ed.getLang('wetkitcleanup.split_content_ef'), onclick : function () {t._splitColumnContent(Array(en_id,fr_id),Array(1,2))}}).setDisabled(0);
-						sub.add({title : ed.getLang('wetkitcleanup.split_content_fe'), onclick : function () {t._splitColumnContent(Array(en_id,fr_id),Array(2,1))}}).setDisabled(0);
+					if (ed.splitColumn.active) {
+						sub.add({title : ed.getLang('wetkitcleanup.split_content_ef'), onclick : function () {t._splitColumnContent(Array(ed.splitColumn.fields.en,ed.splitColumn.fields.fr),Array(1,2))}}).setDisabled(0);
+						sub.add({title : ed.getLang('wetkitcleanup.split_content_fe'), onclick : function () {t._splitColumnContent(Array(ed.splitColumn.fields.en,ed.splitColumn.fields.fr),Array(2,1))}}).setDisabled(0);
 					}
 					sub.add({title : ed.getLang('wetkitcleanup.extract_column_1'), onclick : function () {t._extractTableColumn(1)}}).setDisabled(0);
 					sub.add({title : ed.getLang('wetkitcleanup.extract_column_2'), onclick : function () {t._extractTableColumn(2)}}).setDisabled(0);
 
 					//m.add({title : 'Quick Fix All', onclick : function () {t._QuickFixAll()}}).setDisabled(0);
-                                        m.add({title : ed.getLang('wetkitcleanup.quick_fix_all'), onclick : function () {t._QuickFixAll()}}).setDisabled(0);
+                         //m.add({title : ed.getLang('wetkitcleanup.quick_fix_all'), onclick : function () {t._QuickFixAll()}}).setDisabled(0);
 					sub = m.addMenu({title : ed.getLang('wetkitcleanup.other_cleanup'), onclick : function () {return false;}}); 
 					sub.add({title : ed.getLang('wetkitcleanup.remove_empty_blocks'), onclick : function () {t._removeEmptyBlocks()}}).setDisabled(0);
 					sub.add({title : ed.getLang('wetkitcleanup.remove_table_dimensions'), onclick : function () {t._tableStripWidthHeight(false)}}).setDisabled(0);
@@ -142,44 +159,80 @@
 			t._removeEmptyBlocks();
 			t._numberGroups();
 			t._tableDataParas();
-			t._tableDataAlign('right');
+			if (confirm("Right align numeric data cells?"))
+				t._tableDataAlign('right');
+			t._tableStripWidthHeight(false);
 			t._tableConvertAlignToStyles();
+			var emptyMatch = new RegExp("^(?:<[^>]*>|&nbsp;|\\s)*$");
+			var tags = null;
+			// remove any paragraph or heading that has only tags or whitespace
+			var tags = ed.dom.select('p,h1,h2,h3,h4,h5,h6');
+			for (var i=tags.length-1;i>=0;i--) {
+				if (emptyMatch.test(tags[i].innerHTML)) {
+					ed.dom.remove(tags[i]);
+				}
+			}
+			// remove strong and em from headings
+			var plainText = new RegExp("(?:<[^>]*>|&nbsp;|\\s)+",'g');
+			var tags = ed.dom.select('h1,h2,h3,h4,h5,h6');
+			for (var i=0;tags[i];i++) {
+				var pt = tags[i].innerHTML.replace(plainText,' ');
+				pt = pt.replace(/^\s+/,'').replace(/\s+$/,''); // trim
+				var rmTags = ed.dom.select('em,strong',tags[i]);
+				for (var j=rmTags.length-1;j>=0;j--) {
+					var it = rmTags[j].innerHTML.replace(plainText,' ');
+					it = it.replace(/^\s+/,'').replace(/\s+$/,''); // trim
+					// only replace if the whole string matches
+					if (it == pt) {
+						ed.dom.setOuterHTML(rmTags[j],rmTags[j].innerHTML);
+					}
+				}
+			}
+			// convert image attributes to styles
+			var tags = ed.dom.select('img[align],img[hspace],img[vspace]');
+			for (var i=0;tags[i];i++) {
+				if (ed.dom.getAttrib(tags[i], "align"))
+					ed.dom.setStyles(tags[i], {"float": ed.dom.getAttrib(tags[i], "align")});
+				ed.dom.setAttrib(tags[i], "align", null);
+				ed.dom.setAttrib(tags[i], "hspace", null);
+				ed.dom.setAttrib(tags[i], "vspace", null);
+			}
+			// change attributes in table cells to style attributes instead
+			ed.dom.setAttrib(ed.dom.select('table[align]'), "align", null);
+			var tags = ed.dom.select('*[valign],*[align],*[nowrap],br[clear],*[bgcolor],*[cellpadding],*[cellspacing]');
+			for (var i=0;tags[i];i++) {
+				if (ed.dom.getAttrib(tags[i], "valign"))
+					ed.dom.setStyles(tags[i], {"vertical-align": ed.dom.getAttrib(tags[i], "valign")});
+				if (ed.dom.getAttrib(tags[i], "align"))
+					ed.dom.setStyles(tags[i], {"text-align": ed.dom.getAttrib(tags[i], "align")});
+				ed.dom.setAttrib(tags[i], "valign", null);
+				ed.dom.setAttrib(tags[i], "align", null);
+				ed.dom.setAttrib(tags[i], "nowrap", null);
+				ed.dom.setAttrib(tags[i], "clear", null);
+				ed.dom.setAttrib(tags[i], "bgcolor", null);
+				ed.dom.setAttrib(tags[i], "border", null);
+				ed.dom.setAttrib(tags[i], "cellpadding", null);
+				ed.dom.setAttrib(tags[i], "cellspacing", null);
+			}
 			var newData = b.innerHTML;
-			newData = newData.replace(/<o:p>(&nbsp;|\s)*<\/o:p>/g, ""); // Remove all instances of <o:p>
-			newData = newData.replace(/<\/?o\:[^>]*>/g, "");
-			newData = newData.replace(/<st1:[^>]*>/g, ""); // remove all SmartTags (from MS Word)
-			newData = newData.replace(/<\?xml:[^>]*>/g, ""); // remove all XML(from MS Word)
-			newData = newData.replace(/<\/?(?:st1|font|V:|o:p)[^>]*>/ig, "");
-			newData = newData.replace(/<!\[if !mso\]>.*?<!\[endif\]>/ig, "");
-			newData = newData.replace(/<!\[if !supportEmptyParas\]>.*?<!\[endif\]>/ig, "");
-			newData = newData.replace(/<!--\[if supportFields\]>.*?<!\[endif\]-->/ig, "");
-			newData = newData.replace(/<!\[if !supportLists\]>.*?<!\[endif\]>/ig, "<li>");
-			newData = newData.replace(/<!\[if !supportMisalignedRows+\]>.*?<!\[endif\]>/ig, "");
-			newData = newData.replace(/<v:shapetype .*?<\/v:shapetype>/ig, "");
-			newData = newData.replace(/<v:shape .*?<\/v:shape>/ig, "");
-			newData = newData.replace(/ v:shapes="[^"]+"/ig, "");
 			// apply any unaccepted tracked changes in documents
 			newData = newData.replace(/<del [^>]+>.*?<\/del>/ig, "");
 			newData = newData.replace(/<ins [^>]+>(.*?)<\/ins>/ig, "$1");
-
-			newData = newData.replace(/<!--\[if[^>]+-->/ig, "");
-			newData = newData.replace(/<!\[endif\]-->/ig, "");
-			newData = newData.replace(/\s+class="mso[^"]+"/ig, "");
-			newData = newData.replace(/margin:\s+[^;]+(\s+[^;]+)\s+[^;]+(\s+[^;]+);/ig, "margin: auto $1 auto $2;");
+			// fix long hyphens used in URLs
 			newData = newData.replace(/%1e/g, "-");
-			newData = newData.replace(/(<li(?:>|\s[^>]*>))(?:&nbsp;|\s)*(?:&middot;|o|&sect;|&bull;)(?:&nbsp;|\s)+/ig, "$1");
-			newData = newData.replace(/<(p|h[1-6])(?:>|\s[^>]*>)(?:&nbsp;|\s|<br \/>|<\/?(?:em|strong|span|b|i)(?:>|\s[^>]*>))*<\/\1>/ig, "");
+			// recode up arrows
+			newData = newData.replace(/(?:&uarr;|↑)/g, "&#8593;");
+			// add hard space in empty cells
 			newData = newData.replace(/(<td[^>]*>)\s*(<\/td>)/ig, "$1&nbsp;$2");
-			newData = newData.replace(/(<(?:em|strong|b|i)>)\s*(<(?:p|h[1-6])[^>]*>)/ig, "$2$1");
-			newData = newData.replace(/(<\/(?:p|h[1-6])>)\s*(<\/(?:em|strong|b|i)>)/ig, "$2$1");
-			newData = newData.replace(/(<(?:p|h[1-6])[^>]*)\s+align="left"/ig, "$1");
-			newData = newData.replace(/(<(?:p|h[1-6])[^>]*)\s+align="(right|center|justify)"/ig, "$1 style=\"text-align: $2\"");
+			// remove line breaks that start or end paragraphs and heading
 			newData = newData.replace(/(<(?:p|h[1-6])(?:>|\s[^>]*>))(&nbsp;|\s|<br[^>]*>)+/ig, "$1");
 			newData = newData.replace(/(?:<(p|h[1-6])(?:>|\s[^>]*>))(&nbsp;|\s|<br[^>]*>)*<\/\1>/ig, "");
-			newData = newData.replace(/(?:<(p|h[1-6])(?:>|\s[^>]*>))<span[^>]*>(&nbsp;|\s|<br[^>]*>)*<\/span><\/\1>/ig, "");
+			// remove repeated hard spaces
 			newData = newData.replace(/&nbsp;(&nbsp;)+\s/ig, " ");
-			newData = newData.replace(/<(?:b|strong)>\s*(<p(?:>|\s[^>]*>))(.*?)(<\/p>)\s*<\/(?:b|strong)>/ig, "$1<strong>$2</strong></p>");
-			newData = newData.replace(/<(strong|em)>(\s*)<\/\1>/ig, "$2");
+			// remove strong/em from wrapping whitespace/br
+			newData = newData.replace(/<(strong|em)>((?:&nbsp;|\s|<br \/>)*)<\/\1>/ig, "$2");
+			newData = newData.replace(/<(strong|em)>((?:&nbsp;|\s|<br \/>)*)<\/\1>/ig, "$2");
+
 			// fix MS Word footnote / endnote references that lose the name and id attributes on paste
 			newData = newData.replace(/(<a[^>]*href=")file:[^"#]+/ig, "$1");
 			newData = newData.replace(/(<a[^>]*)\sid="_(ftn|edn)ref(\d+)"/ig, "$1");
@@ -228,6 +281,59 @@
 			else
 				t.editor.dom.removeClass(headingElm,'noidxentry');
 		},
+		
+		_generateTOC : function(sl,el) {
+			var t = this, ed = t.editor, i, c;
+			var hl = Array();
+			for (i=sl;i<=el;i++) {
+				hl[hl.length] = "h"+i;
+			}
+			t.editor.dom.remove('auto-toc');
+			t.editor.dom.remove(t.editor.dom.select('a[id^=toc-tm]',h));
+			var toc = tinyMCE.activeEditor.dom.create('div', {id : 'auto-toc'});
+			var focusElm = t.editor.selection.getNode();
+			if (focusElm)
+				t.editor.dom.insertAfter(toc,focusElm);
+			else
+				t.editor.dom.insertAfter(toc);
+			tocBlock = t.editor.dom.select('#auto-toc');
+			var headings = t.editor.dom.select(hl.join(','));
+			var lastLevel = sl;
+			var c = 1;
+			var cUL = t.editor.dom.add(tocBlock, 'ul');
+			var cLI = null;
+			var activeUL = Array();
+			activeUL[sl] = cUL;
+			var hlCount = Array();
+			for (i=0;headings[i];i++) {
+				var h = headings[i];
+				if (ed.dom.hasClass(h,'noidxentry'))
+					continue;
+				var hl = parseInt(h.tagName.replace(/h/i,''),10);
+				hlCount[hl-2] = hlCount[hl-2] ? hlCount[hl-2]+1 : 1;
+				if (hl > lastLevel) {
+					if (cLI == null) {
+						alert("Levels aren't in order!");
+						return false;
+					} else {
+						activeUL[hl] = t.editor.dom.add(cLI, 'ul');
+					}
+				} else if (hl < lastLevel) {
+					for (var j=lastLevel;j>hl;j--) {
+						hlCount[j-2] = 0;
+					}
+				}
+				lastLevel = hl;
+				
+				var thisId = 'toc-tm';
+				for (var j=sl;hlCount[j-2];j++) {
+					thisId = thisId + '-' + hlCount[j-2];
+				}
+				var txt = h.innerHTML.replace(/<\/?(a|div|span)[^>]>/,' ').replace(/\s\s+/,' ');
+				cLI = t.editor.dom.add(activeUL[hl], 'li',null,'<a href="#'+thisId+'">' + txt + '</a>');
+				t.editor.dom.setHTML(h, '<a name="'+thisId+'" id="'+thisId+'"></a>' + h.innerHTML);
+			}
+		},
 
 		_setLanguage : function(newLang) {
 			var t = this, ed = t.editor, i;
@@ -238,6 +344,41 @@
 			var currContent = ed.selection.getContent();
 			currContent = '<span lang="' + newLang + '">' + currContent + '</span>';
 			ed.selection.setContent(currContent);
+		},
+
+		_fixFootnotes: function (lang) {
+			var t = this, ed = t.editor, i, dom = ed.dom;
+			var fnRegEx = new RegExp("_(ftn|edn)(\\d+)",'i');
+			var fnRefRegEx = new RegExp("_(ftn|edn)ref(\\d+)",'i');
+			var refPattern = '<sup id="fnb%d-ref"><a href="#fnb%d" class="note-link"><span class="wb-invisible">Note </span>%d</a></sup>';
+			var noteSectionPattern = '<div class="wet-boew-note"><h2>Notes</h2><dl>%s</dl></div>';
+			var notePattern = '<dt>Note %d</dt><dd id="fnb%d"><p>%s</p><p class="note-return"><a href="#fnb%d-ref"><span class="wb-invisible">Return to reference</span> %d</a></p></dd>';
+			if (lang == 'fr') {
+				notePattern = '<dt>Note %d</dt><dd id="fnb%d"><p>%s</p><p class="note-return"><a href="#fnb%d-ref"><span class="wb-invisible">Retour &agrave; la r&eacute;f&eacute;rence</span> %d</a></p></dd>';
+			}
+			var firstNote = null;
+			var notesHTML = '';
+			each(dom.select('a'), function(a) {
+				if (fnRegEx.test(a.getAttribute('href'))) {
+					var match = fnRegEx.exec(a.getAttribute('href'));
+					dom.setOuterHTML(a,refPattern.replace(/%d/g,match[2]));
+				} else if (fnRefRegEx.test(a.getAttribute('href'))) {
+					var match = fnRefRegEx.exec(a.getAttribute('href'));
+					var p = dom.getParent(a,'p');
+					dom.remove(a);
+					var tmpHTML = notePattern.replace(/%d/g,match[2]);
+					tmpHTML = tmpHTML.replace(/%s/g,p.innerHTML);
+					notesHTML += tmpHTML;
+					if (parseInt(match[2]) == 1) {
+						firstNote = p;
+					} else {
+						dom.remove(p);
+					}
+				}
+			});
+			if (firstNote != null && notesHTML != '') {
+				dom.setOuterHTML(firstNote,noteSectionPattern.replace(/%s/,notesHTML));
+			}
 		},
 
 		_changeCaseIgnoreHTML : function(newCase) {
@@ -378,9 +519,7 @@
 		},
 
 		_splitColumnContent : function(editorIds,colIndexes) {
-			var t = this;
-			var oppEdIndex = t.editor.id.indexOf('-en-') > -1 ? 1 : 0;
-			var edOther = tinyMCE.get(editorIds[oppEdIndex]);
+			var t = this, ed = t.editor, edOther = tinyMCE.get(editorIds[1]);
 			var colHasContent = t._checkColumnContent(t.editor);
 			var emptyCellMatch = new RegExp("^(?:<[^>]*>|&nbsp;|\\s)*$");
 			if (colHasContent.length == 3 && colHasContent[1] == false) {
@@ -429,7 +568,7 @@
 					for (var tc=1; tc<=tcCount; tc++) {
 						var tcells = rows[trw].getElementsByTagName("td");
 						var td = tcells[skipCell];
-						if (td && td.innerHTML.test(emptyCellMatch)) {
+						if (td && emptyCellMatch.test(td.innerHTML)) {
 							tcCount++;
 							skipCell++;
 						} else if (td) {
@@ -463,10 +602,15 @@
 				tables = d.getElementsByTagName("table");
 			for (var tbl=0; tables[tbl]; tbl++) {
 				ed.dom.setAttribs(tables[tbl], {"width":null, "height":null});
+				ed.dom.setStyle(tables[tbl], "width", null);
+				ed.dom.setStyle(tables[tbl], "height", null);
 				var rows = tables[tbl].getElementsByTagName("tr");
 				for (var trw=0; trw<rows.length; trw++) {
+					ed.dom.setStyles(rows[trw], {"height": null});
 					ed.dom.setAttribs(rows[trw], {"width":null, "height":null});
+					ed.dom.setStyles(rows[trw].getElementsByTagName("td"), {"width":null, "height":null});
 					ed.dom.setAttribs(rows[trw].getElementsByTagName("td"), {"width":null, "height":null});
+					ed.dom.setStyles(rows[trw].getElementsByTagName("th"), {"width":null, "height":null});
 					ed.dom.setAttribs(rows[trw].getElementsByTagName("th"), {"width":null, "height":null});
 				}
 			}
@@ -509,6 +653,14 @@
 			var tables = Array();
 			tables = d.getElementsByTagName("table");
 			for (var tbl=0; tables[tbl]; tbl++) {
+				var tcells = tables[tbl].getElementsByTagName("th");
+				for (var tc=0; tc<tcells.length; tc++) {
+					var td = tcells[tc];
+					var p = td.getElementsByTagName("p");
+					if (p.length == 1) {
+						td.innerHTML = p[0].innerHTML;
+					}
+				}
 				var tcells = tables[tbl].getElementsByTagName("td");
 				for (var tc=0; tc<tcells.length; tc++) {
 					var td = tcells[tc];
@@ -564,7 +716,7 @@
 				for (var trw=0; trw<rows.length; trw++) {
 					var tcells = rows[trw].getElementsByTagName("td");
 					var td = tcells[0];
-					if (td && !td.innerHTML.test(emptyCellMatch)) {
+					if (td && !emptyCellMatch.test(td.innerHTML)) {
 						// changing to a different node type
 						var newCell = d.createElement("th");
 
@@ -586,7 +738,7 @@
 			var t = this, ed = t.editor, nl, i, d = ed.getDoc(), b = ed.getBody();
 			var tables = Array();
 			var allTables = d.getElementsByTagName("table");
-			if (!confirm("Apply to all tables [okay] or just this table [cancel]"))
+			if (!confirm(ed.getLang('wetkitcleanup.confirm_apply_ids_to_all_tables')))
 				tables[0] = t._getSetActiveTableDom();
 			else
 				tables = d.getElementsByTagName("table");
