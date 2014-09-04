@@ -19,6 +19,10 @@ function wetkit_wysiwyg_uninstall() {
 }
 
 /**
+ * Implementations of hook_update_N().
+ */
+
+/**
  * Implements hook_update_n().
  */
 function wetkit_wysiwyg_update_7101() {
@@ -34,5 +38,18 @@ function wetkit_wysiwyg_update_7102() {
   if (module_exists('wysiwyg_filter')) {
     module_disable(array('wysiwyg_filter'));
     drupal_uninstall_modules(array('wysiwyg_filter'));
+  }
+}
+
+/**
+ *  Enable new modules for 2.x branch.
+ */
+function wetkit_wysiwyg_update_7201() {
+  // Enable new modules for 2.x branch.
+  $modules = array('accessibility', 'accessibility_wysiwyg');
+  foreach ($modules as $module) {
+    if (!module_exists($module)) {
+      module_enable(array($module));
+    }
   }
 }
