@@ -119,19 +119,11 @@ function wetkit_wysiwyg_wysiwyg_default_profiles() {
       'acf_allowed_content' => '',
       'css_setting' => 'self',
       'css_path' => '',
-      'stylesSet' => 'float-left=div.float-left
-float-right=div.float-right
-module=div.module
-module-related=div.module-related
-module-billboard=div.module-billboard
-module-event=div.module-event
-module-menu-section=div.module-menu-section
-module-table-contents=div.module-table-contents
-module-poster=div.module-poster
-module-contact=div.module-contact
-module-news=div.module-news
-module-spotlight=div.module-spotlight
-module-comment=div.module-comment',
+      'stylesSet' => 'alert-info=div.alert alert-info
+alert-success=div.alert alert-success
+alert-warning=div.alert alert-warning
+alert-danger=div.alert alert-danger
+badge=span.badge',
       'block_formats' => 'h1,h2,h3,h4,h5,h6',
       'advanced__active_tab' => 'edit-basic',
       'forcePasteAsPlainText' => 0,
