@@ -215,7 +215,7 @@ function wetkit_wysiwyg_wysiwyg_editor_settings_alter(&$settings, $context) {
 
       $settings['codemirror'] = array(
         'theme' => 'monokai',
-        'lineWrapping' => false,
+        'lineWrapping' => true,
       );
       break;
 
