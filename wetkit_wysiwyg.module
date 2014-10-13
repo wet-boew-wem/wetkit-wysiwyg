@@ -170,15 +170,16 @@ function wetkit_wysiwyg_wysiwyg_editor_settings_alter(&$settings, $context) {
 
       // Set CSS Files that absolutely need to be rendered inside the WYSIWYG
       // leaves the interface in the frontend to be used for additional styles.
-      $settings['contentsCss'] = array(
+      $wxt_contentscss = array(
 
         // WET-BOEW jQuery stylesheets.
         $library_path . '/css/theme.min.css',
         $library_path . '/css/wet-boew.min.css',
 
         // Final override for wysiwyg ckeditor body area.
-        drupal_get_path('module', 'wetkit_wysiwyg') . '/css/wetkit-wysiwyg.css',
+        '/' . drupal_get_path('module', 'wetkit_wysiwyg') . '/css/wetkit-wysiwyg.css',
       );
+      $settings['contentsCss'] = array_merge($wxt_contentscss, $settings['contentsCss']);
 
       // Body Class.
       $settings['bodyClass'] = 'wysiwyg-editor-body';
