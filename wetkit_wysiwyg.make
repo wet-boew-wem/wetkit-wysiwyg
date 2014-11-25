@@ -5,14 +5,10 @@ core = 7.x
 
 ; Contrib
 
-projects[linkit][version] = 3.x-dev
-projects[linkit][type] = module
+projects[linkit][version] = 3.2
 projects[linkit][subdir] = contrib
-projects[linkit][download][type] = git
-projects[linkit][download][revision] = 98daa03
-projects[linkit][download][branch] = 7.x-3.x
-projects[linkit][patch][2116251] = http://drupal.org/files/issues/linkit_support_uuid-2116251-3.patch
-projects[linkit][patch][2160653] = http://drupal.org/files/issues/linkit_languages_support-2160653-06.patch
+projects[linkit][patch][2381549] = http://drupal.org/files/issues/linkit_improvements-2381549-1.patch
+projects[linkit][patch][2353105] = http://drupal.org/files/issues/linkit-fix-autocomplete-styling-2353105-4.patch
 
 projects[wysiwyg][version] = 2.x-dev
 projects[wysiwyg][subdir] = contrib
