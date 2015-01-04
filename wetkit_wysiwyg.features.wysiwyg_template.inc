@@ -22,16 +22,16 @@ function wetkit_wysiwyg_wysiwyg_template_default_templates() {
 
 	 <li><a href="#cn_req2">Exigences</a>
 	 <ul>
-	 <li><a href="#cn_1_cww">1.&#160;Conformité aux critères de
-	 la Priorité 1 et de la Priorité 2 du <abbr lang="en" title="World Wide Web Consortium"><span lang="fr">W3C </span></abbr></a></li>
+	 <li><a href="#cn_1_cww">1. Conformité aux critères de
+ 	 la Priorité 1 et de la Priorité 2 du <abbr lang="en" title="World Wide Web Consortium"><span lang="fr">W3C </span></abbr></a></li>
 	 <li><a href="#cn_2_bt">2. Technologies de base</a></li>
 	 <li><a href="#cn_3_aaf">3. Formats de rechange accessibles pour les documents
 	 publiés sur les sites Web</a></li>
-	 <li><a href="#cn_4_oii">4.&#160;Présentation de l\'information
-	 dans plusieurs formats</a></li>
+	 <li><a href="#cn_4_oii">4. Présentation de l\'information
+ 	 dans plusieurs formats</a></li>
 
 	 <li><a href="#cn_5_con">5. Contraste</a></li>
-	 <li><a href="#cn_6_aai">6.&#160;Évaluation de l\'accessibilité,
+	 <li><a href="#cn_6_aai">6. Évaluation de l\'accessibilité,
 	 de l\'interopérabilité et de la facilité d\'emploi</a></li>
 	 </ul>
 	 </li>
@@ -56,6 +56,7 @@ function wetkit_wysiwyg_wysiwyg_template_default_templates() {
 				<li><a href="#cn_3_aaf">3. Accessible alternate format of documents on Web sites</a></li>
 				<li><a href="#cn_4_oii">4. Offering information in multiple formats</a></li>
 				<li><a href="#cn_5_con">5. Contrast</a></li>
+				<li><a href="#cn_5_con">6. Evaluation of accessibility, interoperability and usability</a></li>
 			</ul>
 		</li>
 	</ul>
