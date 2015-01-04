@@ -42,10 +42,10 @@ function wetkit_wysiwyg_update_7102() {
 }
 
 /**
- *  Enable new modules for 2.x branch.
+ *  Enable new modules for 4.x branch.
  */
-function wetkit_wysiwyg_update_7201() {
-  // Enable new modules for 2.x branch.
+function wetkit_wysiwyg_update_7401() {
+  // Enable new modules for 4.x branch.
   $modules = array('accessibility', 'accessibility_wysiwyg');
   foreach ($modules as $module) {
     if (!module_exists($module)) {
