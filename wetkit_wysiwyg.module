@@ -159,10 +159,22 @@ function wetkit_wysiwyg_wysiwyg_editor_settings_alter(&$settings, $context) {
 
   switch ($context['editor']['name']) {
     case 'ckeditor':
+      // Intranet Theme.
+      $wet_theme = '';
+      if ((variable_get('wetkit_wetboew_theme', 0) == 1)) {
+        $wet_theme = 'theme-base';
+      }
+      // Base Theme.
+      elseif ((variable_get('wetkit_wetboew_theme', 0) == 2)) {
+        $wet_theme = 'theme-gcwu-intranet';
+      }
+      // Internet Theme.
+      else {
+        $wet_theme = 'theme-gcwu-fegc';
+      }
 
       // Get active WxT context.
-      $wxt_active = variable_get('wetkit_wetboew_theme', 'wet-boew');
-      $library_path = libraries_get_path($wxt_active, TRUE);
+      $library_path = libraries_get_path('wet-boew', TRUE);
 
       // Start Up Settings.
       $settings['docType'] = '<!DOCTYPE html>';
@@ -173,8 +185,9 @@ function wetkit_wysiwyg_wysiwyg_editor_settings_alter(&$settings, $context) {
       $wxt_contentscss = array(
 
         // WET-BOEW jQuery stylesheets.
-        $library_path . '/css/theme.min.css',
-        $library_path . '/css/wet-boew.min.css',
+        $library_path . '/dist/grids/css/util-min.css',
+        $library_path . '/dist/js/css/pe-ap-min.css',
+        $library_path . '/dist/' . $wet_theme . '/css/theme-min.css',
 
         // Final override for wysiwyg ckeditor body area.
         '/' . drupal_get_path('module', 'wetkit_wysiwyg') . '/css/wetkit-wysiwyg.css',
