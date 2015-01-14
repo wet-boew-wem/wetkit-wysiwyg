@@ -23,7 +23,7 @@ function wetkit_wysiwyg_configure_form($form, &$form_state) {
   $form = array();
   // Documentation.
   $form['wetkit_wysiwyg'] = array(
-    '#title' => 'WYSIWYG Settings',
+    '#title' => t('WYSIWYG Settings'),
     '#type'  => 'fieldset',
     '#collapsible' => 'true',
   );
@@ -236,7 +236,7 @@ function wetkit_wysiwyg_wysiwyg_editor_settings_alter(&$settings, $context) {
           'key' => '1',
           'openWith' => '<h1(!( class="[![Class]!]")!)>',
           'closeWith' => '</h1>',
-          'placeHolder' => 'Your title here...',
+          'placeHolder' => t('Your title here...'),
         ),
         'h2' => array(
           'name' => t('Heading 2'),
@@ -244,7 +244,7 @@ function wetkit_wysiwyg_wysiwyg_editor_settings_alter(&$settings, $context) {
           'key' => '2',
           'openWith' => '<h2(!( class="[![Class]!]")!)>',
           'closeWith' => '</h2>',
-          'placeHolder' => 'Your title here...',
+          'placeHolder' => t('Your title here...'),
         ),
         'h3' => array(
           'name' => t('Heading 3'),
@@ -252,7 +252,7 @@ function wetkit_wysiwyg_wysiwyg_editor_settings_alter(&$settings, $context) {
           'key' => '3',
           'openWith' => '<h3(!( class="[![Class]!]")!)>',
           'closeWith' => '</h3>',
-          'placeHolder' => 'Your title here...',
+          'placeHolder' => t('Your title here...'),
         ),
         'h4' => array(
           'name' => t('Heading 4'),
@@ -260,7 +260,7 @@ function wetkit_wysiwyg_wysiwyg_editor_settings_alter(&$settings, $context) {
           'key' => '4',
           'openWith' => '<h4(!( class="[![Class]!]")!)>',
           'closeWith' => '</h4>',
-          'placeHolder' => 'Your title here...',
+          'placeHolder' => t('Your title here...'),
         ),
         'paragraph' => array(
           'name' => t('Paragraph'),
