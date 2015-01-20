@@ -164,6 +164,9 @@ function wetkit_wysiwyg_wysiwyg_editor_settings_alter(&$settings, $context) {
       $wxt_active = variable_get('wetkit_wetboew_theme', 'wet-boew');
       $library_path = libraries_get_path($wxt_active, TRUE);
 
+      // Custom JS overrides.
+      $settings['customConfig'] = base_path() . drupal_get_path('module', 'wetkit_wysiwyg') . '/js/ckeditor_config.js';
+
       // Start Up Settings.
       $settings['docType'] = '<!DOCTYPE html>';
       $settings['startupMode'] = 'wysiwyg';
@@ -177,7 +180,7 @@ function wetkit_wysiwyg_wysiwyg_editor_settings_alter(&$settings, $context) {
         $library_path . '/css/wet-boew.min.css',
 
         // Final override for wysiwyg ckeditor body area.
-        '/' . drupal_get_path('module', 'wetkit_wysiwyg') . '/css/wetkit-wysiwyg.css',
+        base_path() . drupal_get_path('module', 'wetkit_wysiwyg') . '/css/wetkit-wysiwyg.css',
       );
       $settings['contentsCss'] = array_merge($wxt_contentscss, $settings['contentsCss']);
 
