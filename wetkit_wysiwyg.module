@@ -29,14 +29,15 @@ function wetkit_wysiwyg_configure_form($form, &$form_state) {
   );
   $form['wetkit_wysiwyg']['wetkit_wysiwyg_show_format_details'] = array(
     '#title' => t('Show Text Formatter Details'),
-    '#type' => 'select',
-    '#required' => TRUE,
-    '#options' => array(
-      '1' => t('Show'),
-      '0' => t('Do Not Show'),
-    ),
+    '#type' => 'checkbox',
     '#default_value' => variable_get('wetkit_wysiwyg_show_format_details', 0),
     '#description' => t('Do you want WetKit to show the help text and text format guidelines?'),
+  );
+  $form['wetkit_wysiwyg']['wetkit_wysiwyg_linewrapping'] = array(
+    '#title' => t('Enable Line Wrapping In WYSIWYG Editor Source View'),
+    '#type' => 'checkbox',
+    '#default_value' => variable_get('wetkit_wysiwyg_linewrapping', 0),
+    '#description' => t('Do you want Line Wrapping on the WYSIWYG editor source view to be enabled?'),
   );
 
   return system_settings_form($form);
@@ -229,7 +230,7 @@ function wetkit_wysiwyg_wysiwyg_editor_settings_alter(&$settings, $context) {
 
       $settings['codemirror'] = array(
         'theme' => 'monokai',
-        'lineWrapping' => false,
+        'lineWrapping' => variable_get('wetkit_wysiwyg_linewrapping', 0),
       );
       break;
 
