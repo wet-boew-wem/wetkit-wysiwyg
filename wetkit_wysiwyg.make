@@ -5,10 +5,9 @@ core = 7.x
 
 ; Contrib
 
-projects[linkit][version] = 3.2
+projects[linkit][version] = 3.3
 projects[linkit][subdir] = contrib
 projects[linkit][patch][2381549] = http://drupal.org/files/issues/linkit_improvements-2381549-1.patch
-projects[linkit][patch][2353105] = http://drupal.org/files/issues/linkit-fix-autocomplete-styling-2353105-4.patch
 
 projects[wysiwyg][version] = 2.x-dev
 projects[wysiwyg][subdir] = contrib
