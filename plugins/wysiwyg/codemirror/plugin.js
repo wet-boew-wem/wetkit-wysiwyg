@@ -162,12 +162,12 @@
                         }
                         // Highlight Active Line
                         if (config.highlightActiveLine) {
-                            window["codemirror_" + editor.id].hlLine = window["codemirror_" + editor.id].addLineClass(0, "background", "activeline");
+                            window["codemirror_" + editor.id].hlLine = window["codemirror_" + editor.id].addLineClass(0, "background", "CodeMirror-activeline-background");
                             window["codemirror_" + editor.id].on("cursorActivity", function () {
                                 var cur = window["codemirror_" + editor.id].getLineHandle(window["codemirror_" + editor.id].getCursor().line);
                                 if (cur != window["codemirror_" + editor.id].hlLine) {
-                                    window["codemirror_" + editor.id].removeLineClass(window["codemirror_" + editor.id].hlLine, "background", "activeline");
-                                    window["codemirror_" + editor.id].hlLine = window["codemirror_" + editor.id].addLineClass(cur, "background", "activeline");
+                                    window["codemirror_" + editor.id].removeLineClass(window["codemirror_" + editor.id].hlLine, "background", "CodeMirror-activeline-background");
+                                    window["codemirror_" + editor.id].hlLine = window["codemirror_" + editor.id].addLineClass(cur, "background", "CodeMirror-activeline-background");
                                 }
                             });
                         }
@@ -731,7 +731,7 @@
                 }
                 // Highlight Active Line
                 if (config.highlightActiveLine) {
-                    window["codemirror_" + editor.id].hlLine = window["codemirror_" + editor.id].addLineClass(0, "background", "activeline");
+                    window["codemirror_" + editor.id].hlLine = window["codemirror_" + editor.id].addLineClass(0, "background", "CodeMirror-activeline-background");
                     window["codemirror_" + editor.id].on("cursorActivity", function () {
                         try {
                             var cur = window["codemirror_" + editor.id].getLineHandle(window["codemirror_" + editor.id].getCursor().line);
@@ -740,8 +740,8 @@
                         } finally {
                             if (cur != null) {
                                 if (cur != window["codemirror_" + editor.id].hlLine) {
-                                    window["codemirror_" + editor.id].removeLineClass(window["codemirror_" + editor.id].hlLine, "background", "activeline");
-                                    window["codemirror_" + editor.id].hlLine = window["codemirror_" + editor.id].addLineClass(cur, "background", "activeline");
+                                    window["codemirror_" + editor.id].removeLineClass(window["codemirror_" + editor.id].hlLine, "background", "CodeMirror-activeline-background");
+                                    window["codemirror_" + editor.id].hlLine = window["codemirror_" + editor.id].addLineClass(cur, "background", "CodeMirror-activeline-background");
                                 }
                             }
                         }
