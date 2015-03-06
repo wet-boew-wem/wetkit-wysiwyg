@@ -61,9 +61,6 @@ function wetkit_wysiwyg_linkit_search_plugin_entities_alter(&$plugins) {
     if ($plugin['entity_type'] == 'menu_link') {
       unset($plugins[$plugin_name]);
     }
-    if ($plugin['entity_type'] == 'taxonomy_term') {
-      unset($plugins[$plugin_name]);
-    }
   }
 }
 
