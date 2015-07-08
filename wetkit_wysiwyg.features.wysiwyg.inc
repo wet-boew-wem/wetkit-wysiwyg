@@ -97,9 +97,6 @@ function wetkit_wysiwyg_wysiwyg_default_profiles() {
           'SpellChecker' => 1,
           'Scayt' => 1,
         ),
-        'drupal_accessibility' => array(
-          'drupal_accessibility' => 1,
-        ),
         'linkit' => array(
           'linkit' => 1,
         ),
