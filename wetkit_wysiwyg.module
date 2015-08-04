@@ -30,13 +30,13 @@ function wetkit_wysiwyg_configure_form($form, &$form_state) {
   $form['wetkit_wysiwyg']['wetkit_wysiwyg_show_format_details'] = array(
     '#title' => t('Show Text Formatter Details'),
     '#type' => 'checkbox',
-    '#default_value' => variable_get('wetkit_wysiwyg_show_format_details', 0),
+    '#default_value' => variable_get('wetkit_wysiwyg_show_format_details', FALSE),
     '#description' => t('Do you want WetKit to show the help text and text format guidelines?'),
   );
   $form['wetkit_wysiwyg']['wetkit_wysiwyg_linewrapping'] = array(
     '#title' => t('Enable Line Wrapping In WYSIWYG Editor Source View'),
     '#type' => 'checkbox',
-    '#default_value' => variable_get('wetkit_wysiwyg_linewrapping', 0),
+    '#default_value' => variable_get('wetkit_wysiwyg_linewrapping', TRUE),
     '#description' => t('Do you want Line Wrapping on the WYSIWYG editor source view to be enabled?'),
   );
 
@@ -214,10 +214,9 @@ function wetkit_wysiwyg_wysiwyg_editor_settings_alter(&$settings, $context) {
       $settings['scayt_moreSuggestions'] = 'on';
       $settings['scayt_sLang'] = ($settings['language'] == 'fr') ? 'fr_CA' : 'en_CA';
 
-
       $settings['codemirror'] = array(
         'theme' => 'monokai',
-        'lineWrapping' => variable_get('wetkit_wysiwyg_linewrapping', 0),
+        'lineWrapping' => variable_get('wetkit_wysiwyg_linewrapping', TRUE),
       );
       break;
 

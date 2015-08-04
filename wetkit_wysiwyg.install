@@ -47,3 +47,10 @@ function wetkit_wysiwyg_update_7102() {
 function wetkit_wysiwyg_update_7401() {
   // Deprecated.
 }
+
+/**
+ *  Enable line wrapping in Wysiwyg by default.
+ */
+function wetkit_wysiwyg_update_7402() {
+  variable_set('wetkit_wysiwyg_linewrapping', TRUE);
+}
