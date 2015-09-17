@@ -159,7 +159,7 @@ function wetkit_wysiwyg_wysiwyg_editor_settings_alter(&$settings, $context) {
     case 'ckeditor':
 
       // Get active WxT context.
-      $wxt_active = variable_get('wetkit_wetboew_theme', 'wet-boew');
+      $wxt_active = variable_get('wetkit_wetboew_theme', 'theme-wet-boew');
       $library_path = libraries_get_path($wxt_active, TRUE);
 
       // Custom JS overrides.
