@@ -105,7 +105,6 @@ function wetkit_wysiwyg_wysiwyg_default_profiles() {
         ),
         'drupal' => array(
           'media' => 1,
-          'break' => 1,
         ),
       ),
       'toolbarLocation' => 'top',
