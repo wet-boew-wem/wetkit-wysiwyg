@@ -5,9 +5,9 @@ core = 7.x
 
 ; Contrib
 
-projects[linkit][version] = 3.4
+projects[linkit][version] = 3.5
 projects[linkit][subdir] = contrib
-projects[linkit][patch][2381549] = http://drupal.org/files/issues/linkit_improvements-2381549-8.patch
+projects[linkit][patch][2381549] = http://drupal.org/files/issues/linkit_title_and_uuid-2381549-10.patch
 
 projects[wysiwyg][version] = 2.x-dev
 projects[wysiwyg][subdir] = contrib
