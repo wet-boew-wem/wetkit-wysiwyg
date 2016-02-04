@@ -114,6 +114,10 @@ div.ctools-modal-content .format-toggle,
 .wysiwyg-editor-body {
   margin: 10px !important;
   height: 400px;
+  background:transparent;
+  .alert > :first-child {
+    margin:0;
+  }
 }
 
 /**

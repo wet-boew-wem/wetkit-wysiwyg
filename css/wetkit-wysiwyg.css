@@ -38,7 +38,8 @@ div .markItUpHeader ul .markItUpSeparator { margin-top: 4px; }
 div.ctools-modal-content .format-toggle, .format-toggle { float: right; margin-top: 5px; margin-bottom: 5px; }
 
 /** CKEditor */
-.wysiwyg-editor-body { margin: 10px !important; height: 400px; background:transparent; }
+.wysiwyg-editor-body { margin: 10px !important; height: 400px; background: transparent; }
+.wysiwyg-editor-body .alert > :first-child { margin: 0; }
 
 /** LinkIT */
 .better-autocomplete > .result.highlight > h4, .better-autocomplete > .result.highlight > p { color: black; }
