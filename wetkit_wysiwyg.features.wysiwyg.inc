@@ -40,6 +40,7 @@ function wetkit_wysiwyg_wysiwyg_default_profiles() {
       'css_path' => '',
       'css_classes' => '',
     ),
+    'name' => 'formatwetkit_html_text',
   );
 
   // Exported profile: wetkit_wysiwyg_text
@@ -117,6 +118,7 @@ badge=span.badge',
       'advanced__active_tab' => 'edit-basic',
       'forcePasteAsPlainText' => 0,
     ),
+    'name' => 'formatwetkit_wysiwyg_text',
   );
 
   return $profiles;
