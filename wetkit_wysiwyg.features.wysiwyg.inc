@@ -40,14 +40,6 @@ function wetkit_wysiwyg_wysiwyg_default_profiles() {
       'css_path' => '',
       'css_classes' => '',
     ),
-    'preferences' => array(
-      'add_to_summaries' => NULL,
-      'default' => 1,
-      'show_toggle' => 0,
-      'user_choose' => 0,
-      'version' => '1.1.14',
-    ),
-    'name' => 'formatwetkit_html_text',
   );
 
   // Exported profile: wetkit_wysiwyg_text
@@ -125,14 +117,6 @@ badge=span.badge',
       'advanced__active_tab' => 'edit-basic',
       'forcePasteAsPlainText' => 0,
     ),
-    'preferences' => array(
-      'add_to_summaries' => 1,
-      'default' => 1,
-      'show_toggle' => 0,
-      'user_choose' => 0,
-      'version' => '4.3.5.61fd4ff',
-    ),
-    'name' => 'formatwetkit_wysiwyg_text',
   );
 
   return $profiles;
