@@ -10,7 +10,7 @@
 function wetkit_wysiwyg_wysiwyg_default_profiles() {
   $profiles = array();
 
-  // Exported profile: wetkit_html_text
+  // Exported profile: wetkit_html_text.
   $profiles['wetkit_html_text'] = array(
     'format' => 'wetkit_html_text',
     'editor' => 'markitup',
@@ -40,10 +40,17 @@ function wetkit_wysiwyg_wysiwyg_default_profiles() {
       'css_path' => '',
       'css_classes' => '',
     ),
+    'preferences' => array(
+      'add_to_summaries' => NULL,
+      'default' => NULL,
+      'show_toggle' => NULL,
+      'user_choose' => NULL,
+      'version' => NULL,
+    ),
     'name' => 'formatwetkit_html_text',
   );
 
-  // Exported profile: wetkit_wysiwyg_text
+  // Exported profile: wetkit_wysiwyg_text.
   $profiles['wetkit_wysiwyg_text'] = array(
     'format' => 'wetkit_wysiwyg_text',
     'editor' => 'ckeditor',
@@ -117,6 +124,13 @@ badge=span.badge',
       'block_formats' => 'h1,h2,h3,h4,h5,h6',
       'advanced__active_tab' => 'edit-basic',
       'forcePasteAsPlainText' => 0,
+    ),
+    'preferences' => array(
+      'add_to_summaries' => NULL,
+      'default' => NULL,
+      'show_toggle' => NULL,
+      'user_choose' => NULL,
+      'version' => NULL,
     ),
     'name' => 'formatwetkit_wysiwyg_text',
   );
