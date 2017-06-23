@@ -45,7 +45,7 @@ function wetkit_wysiwyg_wysiwyg_default_profiles() {
       'default' => NULL,
       'show_toggle' => NULL,
       'user_choose' => NULL,
-      'version' => NULL,
+      'version' => '1.1.14',
     ),
     'name' => 'formatwetkit_html_text',
   );
@@ -130,7 +130,7 @@ badge=span.badge',
       'default' => NULL,
       'show_toggle' => NULL,
       'user_choose' => NULL,
-      'version' => NULL,
+      'version' => '4.3.5.61fd4ff',
     ),
     'name' => 'formatwetkit_wysiwyg_text',
   );
